@@ -6,6 +6,8 @@ import { SectionContext } from "@/context/SectionContext";
 
 interface ScrollContainerProps {
   children: ReactNode;
+  /** Rendered outside the scrollable/sectioned area, so it isn't trapped inside any section's stacking context. */
+  overlay?: ReactNode;
   duration?: number;
 }
 
@@ -14,6 +16,7 @@ const easeInOutCubic = (t: number) =>
 
 export default function ScrollContainer({
   children,
+  overlay,
   duration = 1400,
 }: ScrollContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,7 +73,8 @@ export default function ScrollContainer({
   }, [scrollToIndex]);
 
   return (
-    <SectionContext.Provider value={{ scrollToIndex }}>
+    <SectionContext.Provider value={{ scrollToIndex, currentIndex }}>
+      {overlay}
       <div
         ref={containerRef}
         className="h-screen overflow-y-scroll"

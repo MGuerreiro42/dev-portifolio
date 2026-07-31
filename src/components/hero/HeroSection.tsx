@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useHero } from "./useHero";
 import DustField from "./DustField";
-import Navbar from "@/components/nav/Navbar";
+import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 
 /* Proporção original da foto: 1536 × 2730 ≈ 0.5629 */
 const PHOTO_RATIO = 1536 / 2730;
@@ -34,7 +34,7 @@ export default function HeroSection() {
     >
       <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={2000} opacity={0.22} />
 
-      <Navbar />
+      <LocaleSwitcher />
 
       <div className="flex-1 grid grid-cols-2 items-start min-h-screen px-24 relative z-[5] overflow-visible">
 

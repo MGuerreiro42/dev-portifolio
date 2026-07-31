@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import ScrollContainer from "@/components/ScrollContainer";
+import Navbar from "@/components/nav/Navbar";
 import HeroSection from "@/components/hero/HeroSection";
 import AboutSection from "@/components/about/AboutSection";
 import WorkSection from "@/components/work/WorkSection";
@@ -14,7 +15,7 @@ export default async function Home({
   setRequestLocale(locale);
 
   return (
-    <ScrollContainer duration={1400}>
+    <ScrollContainer duration={1400} overlay={<Navbar />}>
       <HeroSection />
       <AboutSection />
       <WorkSection />
