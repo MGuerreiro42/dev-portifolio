@@ -63,7 +63,7 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.4 }}
           >
-            React · TypeScript · System Design
+            React · TypeScript · Node.js
           </motion.p>
 
           <motion.a
