@@ -1,11 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { SiGithub } from "react-icons/si";
+import { FaLinkedin } from "react-icons/fa";
 import Reveal from "@/components/ui/Reveal";
 
 const SOCIALS = [
-  { label: "Github", href: "https://github.com/MGuerreiro42" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/miguelpguerreiro" },
+  { label: "Github", href: "https://github.com/MGuerreiro42", Icon: SiGithub },
+  { label: "LinkedIn", href: "https://linkedin.com/in/miguelpguerreiro", Icon: FaLinkedin },
 ];
 
 export default function ContactSection() {
@@ -61,15 +63,16 @@ export default function ContactSection() {
         </Reveal>
 
         {/* Socials */}
-        <div className="flex items-center gap-12">
+        <div className="flex items-center gap-4">
           {SOCIALS.map((social, i) => (
             <Reveal key={social.label} delay={0.18 + i * 0.08}>
               <a
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-light text-[10px] tracking-[0.45em] uppercase text-[#f0ede8]/[0.65] no-underline transition-colors duration-350 hover:text-[#f0ede8]/95"
+                className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.05] px-5 py-2.5 font-light text-[10px] tracking-[0.3em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
               >
+                <social.Icon className="w-[15px] h-[15px]" />
                 {social.label}
               </a>
             </Reveal>

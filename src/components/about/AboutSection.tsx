@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Reveal from "@/components/ui/Reveal";
+import TechPill from "@/components/ui/TechPill";
 
 const EXPERIENCE_IDS = ["luizalabs", "castGroup"] as const;
 
@@ -108,9 +109,7 @@ export default function AboutSection() {
             <div className="flex flex-wrap gap-2">
               {TECH_STACK.map((tech, i) => (
                 <Reveal key={tech} delay={0.48 + i * 0.06}>
-                  <span className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5">
-                    {tech}
-                  </span>
+                  <TechPill label={tech} />
                 </Reveal>
               ))}
             </div>

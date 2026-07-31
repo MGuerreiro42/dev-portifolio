@@ -4,21 +4,10 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { ChevronDown, Radio, Rss } from "lucide-react";
-import {
-  SiNestjs,
-  SiNextdotjs,
-  SiPostgresql,
-  SiRedis,
-  SiReact,
-  SiTypescript,
-  SiThreedotjs,
-  SiExpress,
-  SiExpo,
-  SiFramer,
-  SiTailwindcss,
-  SiGithub,
-} from "react-icons/si";
+import { ChevronDown, ExternalLink } from "lucide-react";
+import { SiGithub } from "react-icons/si";
+import { TECH_ICONS } from "@/lib/techIcons";
+import TechPill from "@/components/ui/TechPill";
 
 /** Indicador "ao vivo" — bolinha vermelha com oscilação de brilho, como um sinal de REC. */
 function RecDot() {
@@ -39,23 +28,6 @@ function RecDot() {
     </span>
   );
 }
-
-const TECH_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  "NestJS": SiNestjs,
-  "Next.js": SiNextdotjs,
-  "PostgreSQL": SiPostgresql,
-  "Redis": SiRedis,
-  "WebSocket": Radio,
-  "React": SiReact,
-  "TypeScript": SiTypescript,
-  "Three.js": SiThreedotjs,
-  "Express": SiExpress,
-  "SSE": Rss,
-  "React Native": SiReact,
-  "Expo": SiExpo,
-  "Framer Motion": SiFramer,
-  "Tailwind": SiTailwindcss,
-};
 
 interface Project {
   id: string;
@@ -204,6 +176,16 @@ export default function WorkSection() {
           {/* Gradiente de baixo para cima */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-[1]" />
 
+          {/* Leve vinheta sobre a própria imagem quando o projeto está
+              selecionado, para dar profundidade e reforçar o destaque */}
+          <div
+            className={[
+              "absolute inset-0 z-[1] pointer-events-none transition-opacity duration-700",
+              "shadow-[inset_0_0_140px_40px_rgba(0,0,0,0.45)]",
+              active === i ? "opacity-100" : "opacity-0",
+            ].join(" ")}
+          />
+
           {/* Separador vertical entre painéis */}
           {i > 0 && (
             <div className="absolute left-0 top-0 bottom-0 w-px bg-white/[0.07] z-[2]" />
@@ -214,10 +196,12 @@ export default function WorkSection() {
 
             {/* Faixa com blur sobre a imagem — mesmo tratamento do estado
                 minimizado, mas só na área do texto, para manter a imagem
-                nítida no resto do painel quando ativo */}
+                nítida no resto do painel quando ativo. O box-shadow projeta
+                para cima, como se a faixa fosse uma superfície sobrevoando
+                a imagem nítida logo acima dela. */}
             <div
               className={[
-                "absolute left-0 right-0 bottom-0 backdrop-blur-md bg-black/20",
+                "absolute left-0 right-0 bottom-0 backdrop-blur-md bg-black/20 shadow-[0_-30px_40px_-12px_rgba(0,0,0,0.6)]",
                 "transition-opacity duration-500",
                 active === i ? "opacity-100" : "opacity-0 pointer-events-none",
               ].join(" ")}
@@ -309,35 +293,30 @@ export default function WorkSection() {
 
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
-                        >
-                          {tag}
-                        </span>
+                        <TechPill key={tag} label={tag} />
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap gap-x-10 gap-y-3 mt-1">
+                    <div className="flex flex-wrap gap-3 mt-1">
                       {project.href && (
                         <a
                           href={project.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/45 no-underline transition-colors duration-400 hover:text-[#f0ede8]/80"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
                         >
-                          <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
                           {t("viewLive")}
+                          <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
                       <a
                         href={project.repoHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/45 no-underline transition-colors duration-400 hover:text-[#f0ede8]/80"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
                       >
-                        <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
                         {t("viewCode")}
+                        <ExternalLink className="w-3 h-3" />
                       </a>
                     </div>
                   </div>
@@ -422,33 +401,30 @@ export default function WorkSection() {
 
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
-                      >
-                        {tag}
-                      </span>
+                      <TechPill key={tag} label={tag} />
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-x-8 gap-y-3">
+                  <div className="flex flex-wrap gap-3">
                     {project.href && (
                       <a
                         href={project.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-light text-[10px] tracking-[0.3em] uppercase text-[#f0ede8]/50 no-underline"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
                       >
                         {t("viewLive")}
+                        <ExternalLink className="w-3 h-3" />
                       </a>
                     )}
                     <a
                       href={project.repoHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-light text-[10px] tracking-[0.3em] uppercase text-[#f0ede8]/50 no-underline"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
                     >
                       {t("viewCode")}
+                      <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
                 </div>
