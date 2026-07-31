@@ -2,13 +2,13 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 interface Project {
+  id: string;
   title: string;
-  category: string;
   year: string;
-  description: string;
   tags: string[];
   image: string;
   /** Live demo — omitted when the project has no public deploy (e.g. a mobile-only app). */
@@ -19,53 +19,43 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
+    id: "miniTms",
     title: "Mini TMS",
-    category: "Full-Stack Application",
     year: "2026",
-    description:
-      "Multi-tenant transportation management system with real-time delivery tracking — NestJS, Next.js, PostgreSQL and Redis pub/sub, built to demonstrate real domain modeling and a horizontally-scalable real-time architecture.",
     tags: ["NestJS", "Next.js", "PostgreSQL", "Redis", "WebSocket"],
     image: "/projects/mini-tms.png",
     href: "https://mini-tms-logitrack.vercel.app",
     repoHref: "https://github.com/MGuerreiro42/mini-tms-logitrack",
   },
   {
+    id: "vigilDashboard",
     title: "Vigil Dashboard",
-    category: "Data Visualization",
     year: "2026",
-    description:
-      "A live global monitoring dashboard aggregating crypto markets, ISS tracking, seismic activity, weather and news into one real-time interface — React, a Three.js globe, WebSocket and REST polling side by side.",
     tags: ["React", "TypeScript", "Three.js", "WebSocket"],
     image: "/projects/vigil-dashboard.png",
     repoHref: "https://github.com/MGuerreiro42/vigil-dashboard",
   },
   {
+    id: "realtimeCommunication",
     title: "Real-Time Communication",
-    category: "Technical Demo",
     year: "2026",
-    description:
-      "An interactive, side-by-side comparison of Polling, Long Polling, Server-Sent Events and WebSocket — live event streams for each technique, plus a bilingual technical deep-dive presentation.",
     tags: ["Next.js", "Express", "WebSocket", "SSE"],
     image: "/projects/realtime-communication.png",
     href: "https://realtime-comunication-talk.vercel.app",
     repoHref: "https://github.com/MGuerreiro42/realtime-comunication-talk",
   },
   {
+    id: "dineOutApp",
     title: "Dine Out App",
-    category: "Mobile App",
     year: "2026",
-    description:
-      "A restaurant and bar discovery app — browse by cuisine, occasion and vibe, dig into a menu and reviews. Expo/React Native, built with a spec-driven workflow; currently a navigable prototype for business partners.",
     tags: ["React Native", "Expo", "TypeScript"],
     image: "/projects/dine-out-app.png",
     repoHref: "https://github.com/MGuerreiro42/dine-out-app",
   },
   {
+    id: "portfolio",
     title: "Portfolio",
-    category: "Personal Project",
     year: "2026",
-    description:
-      "This very portfolio — built with Next.js, Three.js and Framer Motion. Obsessive attention to motion, detail and visual depth.",
     tags: ["Next.js", "Three.js", "Framer Motion", "Tailwind"],
     image: "/portfolio.png",
     repoHref: "https://github.com/MGuerreiro42/dev-portifolio",
@@ -78,6 +68,7 @@ interface ParallaxOffset {
 }
 
 export default function WorkSection() {
+  const t = useTranslations("Work");
   const [hovered, setHovered] = useState<number | null>(null);
   const [active, setActive] = useState<number | null>(null);
   const [parallax, setParallax] = useState<Record<number, ParallaxOffset>>({});
@@ -120,6 +111,10 @@ export default function WorkSection() {
               ? "flex-[2.5]"
               : active !== null
               ? "flex-[0.75]"
+              : hovered === i
+              ? "flex-[1.4]"
+              : hovered !== null
+              ? "flex-[0.85]"
               : "flex-1",
           ].join(" ")}
           onClick={() => handleClick(i)}
@@ -173,7 +168,7 @@ export default function WorkSection() {
               ].join(" ")}
             >
               <p className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.35]">
-                {project.category} · {project.year}
+                {t(`projects.${project.id}.category`)} · {project.year}
               </p>
             </div>
 
@@ -202,14 +197,14 @@ export default function WorkSection() {
                 ].join(" ")}
               >
                 <p className="font-light text-[12px] leading-[1.9] text-[#f0ede8]/[0.38] max-w-[380px]">
-                  {project.description}
+                  {t(`projects.${project.id}.description`)}
                 </p>
 
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="font-light text-[9px] tracking-[0.22em] uppercase text-[#f0ede8]/50 border border-white/[0.10] px-3 py-1.5"
+                      className="font-light text-[9px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
                     >
                       {tag}
                     </span>
@@ -225,7 +220,7 @@ export default function WorkSection() {
                       className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
                     >
                       <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
-                      View Live
+                      {t("viewLive")}
                     </a>
                   )}
                   <a
@@ -235,7 +230,7 @@ export default function WorkSection() {
                     className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
                   >
                     <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
-                    View Code
+                    {t("viewCode")}
                   </a>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useHero } from "./useHero";
 import DustField from "./DustField";
@@ -10,6 +11,7 @@ import Navbar from "@/components/nav/Navbar";
 const PHOTO_RATIO = 1536 / 2730;
 
 export default function HeroSection() {
+  const t = useTranslations("Hero");
   const {
     containerRef,
     mouseXRef,
@@ -44,7 +46,7 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.0 }}
           >
-            Miguel Guerreiro
+            {t("name")}
           </motion.p>
 
           <motion.h1
@@ -63,7 +65,7 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.4 }}
           >
-            React · TypeScript · Node.js
+            {t("subtitle")}
           </motion.p>
 
           <motion.a
@@ -74,7 +76,7 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 1.65 }}
           >
             <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-15" />
-            View Work
+            {t("cta")}
           </motion.a>
         </div>
 
@@ -148,7 +150,7 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2.0 }}
       >
-        Based in Americana, SP · Brazil
+        {t("location")}
       </motion.span>
     </div>
   );

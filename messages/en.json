@@ -1,0 +1,75 @@
+{
+  "Metadata": {
+    "title": "Miguel — Frontend Developer",
+    "description": "Miguel Guerreiro's portfolio — front-end developer focused on React, Next.js and clean, maintainable interfaces."
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "work": "Work",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "name": "Miguel Guerreiro",
+    "subtitle": "React · TypeScript · Node.js",
+    "cta": "View Work",
+    "location": "Based in Americana, SP · Brazil"
+  },
+  "About": {
+    "label": "Biography_Log",
+    "headingLine1": "Attention",
+    "headingLine2": "to Detail.",
+    "quotePrefix": "I turn complex products into interfaces that are",
+    "quoteHighlight": "fast, clear, and easy to maintain.",
+    "paragraph": "8 years of front-end experience — from defining technical direction to shipping the details that make a product feel right.",
+    "competenciesLabel": "Core Competencies",
+    "techStackLabel": "Selected Tech Stack",
+    "competencies": [
+      "Front-end Architecture",
+      "Technical Leadership",
+      "Design Systems",
+      "Micro Frontends"
+    ],
+    "experience": {
+      "luizalabs": {
+        "period": "Oct 2019 — Jul 2026",
+        "role": "Software Engineer (Front-end) @ Luizalabs"
+      },
+      "castGroup": {
+        "period": "Sep 2018 — Oct 2019",
+        "role": "Web Developer @ Cast Group"
+      }
+    }
+  },
+  "Work": {
+    "viewLive": "View Live",
+    "viewCode": "View Code",
+    "projects": {
+      "miniTms": {
+        "category": "Full-Stack Application",
+        "description": "Multi-tenant transportation management system with real-time delivery tracking — NestJS, Next.js, PostgreSQL and Redis pub/sub, built to demonstrate real domain modeling and a horizontally-scalable real-time architecture."
+      },
+      "vigilDashboard": {
+        "category": "Data Visualization",
+        "description": "A live global monitoring dashboard aggregating crypto markets, ISS tracking, seismic activity, weather and news into one real-time interface — React, a Three.js globe, WebSocket and REST polling side by side."
+      },
+      "realtimeCommunication": {
+        "category": "Technical Demo",
+        "description": "An interactive, side-by-side comparison of Polling, Long Polling, Server-Sent Events and WebSocket — live event streams for each technique, plus a bilingual technical deep-dive presentation."
+      },
+      "dineOutApp": {
+        "category": "Mobile App",
+        "description": "A restaurant and bar discovery app — browse by cuisine, occasion and vibe, dig into a menu and reviews. Expo/React Native, built with a spec-driven workflow; currently a navigable prototype for business partners."
+      },
+      "portfolio": {
+        "category": "Personal Project",
+        "description": "This very portfolio — built with Next.js, Three.js and Framer Motion."
+      }
+    }
+  },
+  "Contact": {
+    "heading1": "Let's",
+    "heading2": "Build",
+    "footer": "© {year} Miguel_Portfolio_V.01 — Americana, SP · Brazil"
+  }
+}

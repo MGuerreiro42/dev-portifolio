@@ -1,22 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Reveal from "@/components/ui/Reveal";
 
-const EXPERIENCE = [
-  { period: "Oct 2019 — Jul 2026", role: "Software Engineer (Front-end) @ Luizalabs" },
-  { period: "Sep 2018 — Oct 2019", role: "Web Developer @ Cast Group" },
-];
-
-const COMPETENCIES = [
-  "Front-end Architecture",
-  "Technical Leadership",
-  "Design Systems",
-  "Micro Frontends",
-];
+const EXPERIENCE_IDS = ["luizalabs", "castGroup"] as const;
 
 const TECH_STACK = ["React", "Next.js", "TypeScript", "Node.js", "Tailwind"];
 
 export default function AboutSection() {
+  const t = useTranslations("About");
+  const competencies = t.raw("competencies") as string[];
+
   return (
     <section
       id="about"
@@ -29,27 +23,27 @@ export default function AboutSection() {
       <div className="flex flex-col">
         <Reveal delay={0.05} className="mb-10">
           <p className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.18]">
-            Biography_Log
+            {t("label")}
           </p>
         </Reveal>
 
         <Reveal delay={0.15} className="mb-16">
           <h2 className="font-display text-[clamp(52px,6vw,96px)] leading-[0.87] tracking-[-0.01em] uppercase text-[#f0ede8]">
-            Attention<br />to Detail.
+            {t("headingLine1")}<br />{t("headingLine2")}
           </h2>
         </Reveal>
 
         {/* Experiências */}
         <div className="flex flex-col mt-auto">
-          {EXPERIENCE.map((item, i) => (
-            <div key={i}>
+          {EXPERIENCE_IDS.map((id, i) => (
+            <div key={id}>
               <Reveal delay={0.25 + i * 0.12}>
                 <div className="h-px bg-white/[0.08] mb-5" />
                 <p className="font-light text-[9px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.22] mb-2">
-                  {item.period}
+                  {t(`experience.${id}.period`)}
                 </p>
                 <p className="font-light text-[11px] tracking-[0.18em] uppercase text-[#f0ede8]/70 mb-6">
-                  {item.role}
+                  {t(`experience.${id}.role`)}
                 </p>
               </Reveal>
             </div>
@@ -62,15 +56,15 @@ export default function AboutSection() {
         {/* Quote */}
         <Reveal delay={0.2} className="mb-10">
           <p className="font-display text-[clamp(22px,2.8vw,38px)] leading-[1.18] tracking-[-0.01em] uppercase text-[#f0ede8]">
-            I turn complex products into interfaces that are{" "}
-            <span className="text-[#f0ede8]/[0.22]">fast, clear, and easy to maintain.</span>
+            {t("quotePrefix")}{" "}
+            <span className="text-[#f0ede8]/[0.22]">{t("quoteHighlight")}</span>
           </p>
         </Reveal>
 
         {/* Parágrafo */}
         <Reveal delay={0.32} className="mb-16">
           <p className="font-light text-[12px] leading-[2] text-[#f0ede8]/[0.28] max-w-[520px]">
-            8 years of front-end experience — from defining technical direction to shipping the details that make a product feel right.
+            {t("paragraph")}
           </p>
         </Reveal>
 
@@ -80,11 +74,11 @@ export default function AboutSection() {
           <div>
             <Reveal delay={0.42} className="mb-5">
               <p className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.18]">
-                Core Competencies
+                {t("competenciesLabel")}
               </p>
             </Reveal>
             <ul className="flex flex-col gap-2">
-              {COMPETENCIES.map((item, i) => (
+              {competencies.map((item, i) => (
                 <Reveal key={item} delay={0.48 + i * 0.07}>
                   <li className="font-light text-[12px] text-[#f0ede8]/50">
                     {item}
@@ -98,13 +92,13 @@ export default function AboutSection() {
           <div>
             <Reveal delay={0.42} className="mb-5">
               <p className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.18]">
-                Selected Tech Stack
+                {t("techStackLabel")}
               </p>
             </Reveal>
             <div className="flex flex-wrap gap-2">
               {TECH_STACK.map((tech, i) => (
                 <Reveal key={tech} delay={0.48 + i * 0.06}>
-                  <span className="font-light text-[9px] tracking-[0.22em] uppercase text-[#f0ede8]/50 border border-white/[0.10] px-3 py-1.5">
+                  <span className="font-light text-[9px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5">
                     {tech}
                   </span>
                 </Reveal>
