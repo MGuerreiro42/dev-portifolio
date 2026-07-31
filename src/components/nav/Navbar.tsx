@@ -8,7 +8,7 @@ import { useSectionContext } from "@/context/SectionContext";
 const NAV_KEYS = ["home", "about", "work", "contact"] as const;
 
 const baseLinkClass =
-  "font-light text-[10px] leading-none tracking-[0.32em] uppercase no-underline px-6 py-1 transition-colors duration-[350ms] cursor-pointer";
+  "font-light text-[10px] leading-none tracking-[0.32em] uppercase no-underline px-5 py-1 transition-colors duration-[350ms] cursor-pointer";
 
 export default function Navbar() {
   const { scrollToIndex, currentIndex } = useSectionContext();
@@ -16,7 +16,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex items-center rounded-full border border-white/10 bg-black/40 px-3 py-2.5 backdrop-blur-md"
+      className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] flex items-center rounded-full border border-white/10 bg-black/40 px-2 py-1.5 backdrop-blur-md"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}

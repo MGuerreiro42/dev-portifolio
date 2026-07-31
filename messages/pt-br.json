@@ -17,8 +17,7 @@
   },
   "About": {
     "label": "Biography_Log",
-    "headingLine1": "Atenção",
-    "headingLine2": "aos Detalhes.",
+    "bio": "Engenheiro de Software com 8 anos de experiência em desenvolvimento web — foco em React, Next.js e arquitetura front-end. Já liderei a evolução técnica de mais de 30 produtos, da definição de soluções a migrações como Micro Frontends. Minha formação em Design Digital me mantém próximo de UX, então atuo de ponta a ponta: da concepção à implementação e sustentação, sempre equilibrando escalabilidade, performance e experiência do desenvolvedor.",
     "quotePrefix": "Eu transformo produtos complexos em interfaces",
     "quoteHighlight": "rápidas, claras e fáceis de manter.",
     "paragraph": "8 anos de experiência em front-end — desde definir direção técnica até cuidar dos detalhes que fazem um produto funcionar bem.",
