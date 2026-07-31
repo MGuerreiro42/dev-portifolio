@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { ChevronDown, Globe, Radio, Rss } from "lucide-react";
+import { ChevronDown, Radio, Rss } from "lucide-react";
 import {
   SiNestjs,
   SiNextdotjs,
@@ -19,6 +19,26 @@ import {
   SiTailwindcss,
   SiGithub,
 } from "react-icons/si";
+
+/** Indicador "ao vivo" — bolinha vermelha com oscilação de brilho, como um sinal de REC. */
+function RecDot() {
+  return (
+    <span className="relative flex w-[9px] h-[9px]">
+      <motion.span
+        className="absolute inset-0 rounded-full bg-red-500"
+        animate={{
+          opacity: [0.55, 1, 0.55],
+          boxShadow: [
+            "0 0 2px 0px rgba(239,68,68,0.5)",
+            "0 0 7px 2px rgba(239,68,68,0.9)",
+            "0 0 2px 0px rgba(239,68,68,0.5)",
+          ],
+        }}
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </span>
+  );
+}
 
 const TECH_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   "NestJS": SiNestjs,
@@ -250,9 +270,7 @@ export default function WorkSection() {
 
                 <div className="flex items-center gap-2.5">
                   <SiGithub className="w-[13px] h-[13px] text-[#f0ede8]/45" />
-                  {project.href && (
-                    <Globe className="w-[13px] h-[13px] text-emerald-400/70" />
-                  )}
+                  {project.href && <RecDot />}
                 </div>
               </div>
 
@@ -366,9 +384,7 @@ export default function WorkSection() {
 
                 <div className="flex items-center gap-2.5">
                   <SiGithub className="w-[13px] h-[13px] text-[#f0ede8]/45" />
-                  {project.href && (
-                    <Globe className="w-[13px] h-[13px] text-emerald-400/70" />
-                  )}
+                  {project.href && <RecDot />}
                 </div>
 
                 <ChevronDown
