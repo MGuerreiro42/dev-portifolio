@@ -14,7 +14,7 @@ export default function LocaleSwitcher() {
 
   return (
     <motion.div
-      className="absolute top-5 right-24 z-[50] flex items-center gap-1 rounded-full border border-white/10 bg-black/40 px-1.5 py-1 backdrop-blur-md"
+      className="absolute top-[21.75px] right-24 z-[50] flex items-center gap-1 rounded-full border border-white/10 bg-black/40 px-1.5 py-1 backdrop-blur-md"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
