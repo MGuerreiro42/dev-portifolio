@@ -212,6 +212,18 @@ export default function WorkSection() {
           {/* Conteúdo */}
           <div className="absolute inset-0 z-[3]">
 
+            {/* Faixa com blur sobre a imagem — mesmo tratamento do estado
+                minimizado, mas só na área do texto, para manter a imagem
+                nítida no resto do painel quando ativo */}
+            <div
+              className={[
+                "absolute left-0 right-0 bottom-0 backdrop-blur-md bg-black/20",
+                "transition-opacity duration-500",
+                active === i ? "opacity-100" : "opacity-0 pointer-events-none",
+              ].join(" ")}
+              style={{ top: "calc(50% - 150px)" }}
+            />
+
             {/* Topo — categoria + ano, visível só quando ativo */}
             <div
               className={[
@@ -281,7 +293,7 @@ export default function WorkSection() {
                   active === i ? "grid-rows-[1fr] mt-6" : "grid-rows-[0fr] mt-0",
                 ].join(" ")}
               >
-                <div className="overflow-hidden">
+                <div className="overflow-hidden pb-2">
                   <div
                     className={[
                       "flex flex-col gap-5",
@@ -291,7 +303,7 @@ export default function WorkSection() {
                         : "opacity-0 translate-y-4 pointer-events-none",
                     ].join(" ")}
                   >
-                    <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.38] max-w-[380px]">
+                    <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.55] max-w-[380px]">
                       {t(`projects.${project.id}.description`)}
                     </p>
 
@@ -312,7 +324,7 @@ export default function WorkSection() {
                           href={project.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                          className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/45 no-underline transition-colors duration-400 hover:text-[#f0ede8]/80"
                         >
                           <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
                           {t("viewLive")}
@@ -322,7 +334,7 @@ export default function WorkSection() {
                         href={project.repoHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                        className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/45 no-underline transition-colors duration-400 hover:text-[#f0ede8]/80"
                       >
                         <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
                         {t("viewCode")}
