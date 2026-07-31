@@ -36,7 +36,9 @@ export default function ScrollContainer({
 
       isAnimating.current = true;
       const startY = container.scrollTop;
-      const targetY = index * container.clientHeight;
+      // offsetTop (não index * clientHeight) funciona tanto no modo desktop
+      // (seções de exatamente uma tela) quanto no mobile (altura variável).
+      const targetY = sections[index].offsetTop;
       const distance = targetY - startY;
       const startTime = performance.now();
 
@@ -62,7 +64,13 @@ export default function ScrollContainer({
     const container = containerRef.current;
     if (!container) return;
 
+    // O snap-scroll por wheel assume seções de exatamente uma tela — no
+    // mobile a seção Work vira uma lista vertical de altura variável, então
+    // abaixo do breakpoint md deixamos o scroll nativo (touch) acontecer.
+    const isDesktop = () => window.matchMedia("(min-width: 768px)").matches;
+
     const onWheel = (e: WheelEvent) => {
+      if (!isDesktop()) return;
       e.preventDefault();
       if (isAnimating.current) return;
       scrollToIndex(currentIndexRef.current + (e.deltaY > 0 ? 1 : -1));

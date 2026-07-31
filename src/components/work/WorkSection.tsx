@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { Globe, Radio, Rss } from "lucide-react";
+import { ChevronDown, Globe, Radio, Rss } from "lucide-react";
 import {
   SiNestjs,
   SiNextdotjs,
@@ -127,11 +127,13 @@ export default function WorkSection() {
   return (
     <section
       id="work"
-      className="relative w-full h-screen flex overflow-hidden sticky top-0 z-[3]"
+      className="relative w-full min-h-screen md:h-screen overflow-hidden md:sticky md:top-0 z-[3]"
     >
       {/* Linha divisória do topo */}
       <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.06] z-10" />
 
+      {/* Desktop — painéis lado a lado, expandem com hover/clique */}
+      <div className="hidden md:flex w-full h-full">
       {PROJECTS.map((project, i) => (
         <div
           key={project.title}
@@ -315,6 +317,118 @@ export default function WorkSection() {
           </div>
         </div>
       ))}
+      </div>
+
+      {/* Mobile — lista vertical, toque expande a descrição/tags/links */}
+      <div className="flex md:hidden flex-col gap-5 px-6 py-24">
+        {PROJECTS.map((project, i) => (
+          <div
+            key={project.title}
+            className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]"
+          >
+            <button
+              onClick={() => handleClick(i)}
+              className="block w-full text-left cursor-pointer"
+              aria-expanded={active === i}
+            >
+              <div className="relative h-52 w-full">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="font-light text-[9px] tracking-[0.4em] uppercase text-[#f0ede8]/50 mb-1.5">
+                    {t(`projects.${project.id}.category`)} · {project.year}
+                  </p>
+                  <h3 className="font-display text-[26px] leading-none uppercase text-[#f0ede8]">
+                    {project.title}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 px-4 py-3.5">
+                <div className="flex items-center gap-2.5">
+                  {project.tags.map((tag) => {
+                    const Icon = TECH_ICONS[tag];
+                    return Icon ? (
+                      <Icon
+                        key={tag}
+                        className="w-[15px] h-[15px] text-[#f0ede8]/45"
+                      />
+                    ) : null;
+                  })}
+                </div>
+
+                <span className="w-px h-3.5 bg-white/15 shrink-0" />
+
+                <div className="flex items-center gap-2.5">
+                  <SiGithub className="w-[13px] h-[13px] text-[#f0ede8]/45" />
+                  {project.href && (
+                    <Globe className="w-[13px] h-[13px] text-emerald-400/70" />
+                  )}
+                </div>
+
+                <ChevronDown
+                  className={[
+                    "w-4 h-4 text-[#f0ede8]/30 ml-auto transition-transform duration-300",
+                    active === i ? "rotate-180" : "",
+                  ].join(" ")}
+                />
+              </div>
+            </button>
+
+            <div
+              className={[
+                "grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                active === i ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+              ].join(" ")}
+            >
+              <div className="overflow-hidden">
+                <div className="flex flex-col gap-4 px-4 pb-5">
+                  <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.5]">
+                    {t(`projects.${project.id}.description`)}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap gap-x-8 gap-y-3">
+                    {project.href && (
+                      <a
+                        href={project.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-light text-[10px] tracking-[0.3em] uppercase text-[#f0ede8]/50 no-underline"
+                      >
+                        {t("viewLive")}
+                      </a>
+                    )}
+                    <a
+                      href={project.repoHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-light text-[10px] tracking-[0.3em] uppercase text-[#f0ede8]/50 no-underline"
+                    >
+                      {t("viewCode")}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
