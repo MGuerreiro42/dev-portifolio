@@ -15,10 +15,10 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative w-full h-screen bg-black px-24 grid grid-cols-[2fr_3fr] gap-24 items-center sticky top-0 z-[2]"
+      className="relative w-full min-h-screen md:h-screen bg-black px-6 md:px-24 py-24 md:py-0 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 md:gap-24 items-start md:items-center md:sticky md:top-0 z-[2]"
     >
       {/* Linha divisória do topo */}
-      <div className="absolute top-0 left-24 right-24 h-px bg-white/[0.06]" />
+      <div className="absolute top-0 left-6 right-6 md:left-24 md:right-24 h-px bg-white/[0.06]" />
 
       {/* ── Coluna esquerda ── */}
       <div className="flex flex-col">
@@ -74,7 +74,7 @@ export default function AboutSection() {
         </Reveal>
 
         {/* Sub-colunas */}
-        <div className="grid grid-cols-2 gap-12">
+        <div className="grid grid-cols-2 gap-6 md:gap-12">
           {/* Competências */}
           <div>
             <Reveal delay={0.42} className="mb-5">

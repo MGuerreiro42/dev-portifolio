@@ -2,6 +2,7 @@ import { setRequestLocale } from "next-intl/server";
 import ScrollContainer from "@/components/ScrollContainer";
 import Brand from "@/components/nav/Brand";
 import Navbar from "@/components/nav/Navbar";
+import MobileMenu from "@/components/nav/MobileMenu";
 import HeroSection from "@/components/hero/HeroSection";
 import AboutSection from "@/components/about/AboutSection";
 import WorkSection from "@/components/work/WorkSection";
@@ -22,6 +23,7 @@ export default async function Home({
         <>
           <Brand />
           <Navbar />
+          <MobileMenu />
         </>
       }
     >

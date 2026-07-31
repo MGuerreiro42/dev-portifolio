@@ -36,7 +36,16 @@ export default function ScrollContainer({
 
       isAnimating.current = true;
       const startY = container.scrollTop;
-      const targetY = index * container.clientHeight;
+      // No desktop as seções são sticky + exatamente uma tela, então
+      // offsetTop não é confiável (sticky some navegadores retornam a
+      // posição "presa" atual em vez da posição estática original, uma vez
+      // que a seção já foi ultrapassada no scroll) — usamos index * altura,
+      // que é sempre exato nesse modo. No mobile as seções têm altura
+      // variável (Work vira lista), então precisamos do offsetTop real.
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      const targetY = isDesktop
+        ? index * container.clientHeight
+        : sections[index].offsetTop;
       const distance = targetY - startY;
       const startTime = performance.now();
 
@@ -62,7 +71,13 @@ export default function ScrollContainer({
     const container = containerRef.current;
     if (!container) return;
 
+    // O snap-scroll por wheel assume seções de exatamente uma tela — no
+    // mobile a seção Work vira uma lista vertical de altura variável, então
+    // abaixo do breakpoint md deixamos o scroll nativo (touch) acontecer.
+    const isDesktop = () => window.matchMedia("(min-width: 768px)").matches;
+
     const onWheel = (e: WheelEvent) => {
+      if (!isDesktop()) return;
       e.preventDefault();
       if (isAnimating.current) return;
       scrollToIndex(currentIndexRef.current + (e.deltaY > 0 ? 1 : -1));
