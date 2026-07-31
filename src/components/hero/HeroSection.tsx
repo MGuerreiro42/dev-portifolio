@@ -2,28 +2,22 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { useHero } from "./useHero";
+import { usePanelFloat } from "./usePanelFloat";
 import DustField from "./DustField";
 import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 
-/* Proporção original da foto: 1536 × 2730 ≈ 0.5629 */
-const PHOTO_RATIO = 1536 / 2730;
-
 export default function HeroSection() {
   const t = useTranslations("Hero");
+  const { containerRef, mouseXRef, mouseYRef, handleMouseMove, handleMouseLeave } = useHero();
   const {
-    containerRef,
-    mouseXRef,
-    mouseYRef,
-    glowPos,
+    panelRef,
+    handleMouseMove: handlePanelMouseMove,
+    handleMouseLeave: handlePanelMouseLeave,
     rotateX,
     rotateY,
-    translateX,
-    translateY,
-    handleMouseMove,
-    handleMouseLeave,
-  } = useHero();
+    translateY: panelFloatY,
+  } = usePanelFloat();
 
   return (
     <div
@@ -32,16 +26,61 @@ export default function HeroSection() {
       onMouseLeave={handleMouseLeave}
       className="relative w-full h-screen bg-black flex flex-col overflow-hidden sticky top-0 z-[1]"
     >
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 50% at 50% 46%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 45%, transparent 75%)",
+        }}
+      />
+
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.22) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.22) 2px, transparent 2px)",
+          backgroundSize: "56px 56px",
+          maskImage:
+            "radial-gradient(ellipse 65% 60% at 50% 46%, black 0%, transparent 78%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 65% 60% at 50% 46%, black 0%, transparent 78%)",
+        }}
+      />
+
       <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={2000} opacity={0.22} />
 
       <LocaleSwitcher />
 
-      <div className="flex-1 grid grid-cols-2 items-start min-h-screen px-24 relative z-[5] overflow-visible">
+      <div
+        className="flex-1 flex items-center justify-center px-6 relative z-[5]"
+        style={{ perspective: "1200px" }}
+      >
+        <motion.div
+          ref={panelRef}
+          onMouseMove={handlePanelMouseMove}
+          onMouseLeave={handlePanelMouseLeave}
+          className="flex flex-col items-center text-center rounded-[32px] border border-white/8 backdrop-blur-sm shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
+          style={{
+            transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${panelFloatY}px)`,
+            transformStyle: "preserve-3d",
+            willChange: "transform",
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.h1
+            className="font-display text-[clamp(44px,6.4vw,96px)] leading-[0.94] tracking-[-0.01em] text-[#f0ede8] uppercase"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            SOFTWARE<br />ENGINEER<br />
+            <span className="text-[#f0ede8]/[0.22]">FRONT-END<br />DEVELOPER</span>
+          </motion.h1>
 
-        {/* ── Texto ── */}
-        <div className="flex flex-col justify-start pt-[160px] overflow-visible">
           <motion.p
-            className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.18] mb-[22px]"
+            className="font-display text-[clamp(20px,2.2vw,28px)] tracking-[0.01em] text-[#f0ede8]/90 mt-[42px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.0 }}
@@ -49,97 +88,26 @@ export default function HeroSection() {
             {t("name")}
           </motion.p>
 
-          <motion.h1
-            className="font-display text-[clamp(78px,9vw,152px)] leading-[0.87] tracking-[-0.01em] text-[#f0ede8] mb-[38px] whitespace-nowrap overflow-visible uppercase"
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
-          >
-            SOFTWARE<br />ENGINEER<br />
-            <span className="text-[#f0ede8]/[0.08]">FRONT-END<br />DEVELOPER</span>
-          </motion.h1>
-
           <motion.p
-            className="font-light text-[12px] leading-[2] text-[#f0ede8]/[0.28] max-w-[270px] mb-[52px]"
+            className="font-light text-[clamp(14px,1.3vw,17px)] tracking-[0.14em] uppercase text-[#f0ede8]/40 mt-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.4 }}
+            transition={{ duration: 1, delay: 1.2 }}
           >
             {t("subtitle")}
           </motion.p>
 
           <motion.a
             href="#work"
-            className="group inline-flex items-center gap-4.5 font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+            className="group inline-flex items-center gap-4.5 font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65 mt-[52px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.65 }}
+            transition={{ duration: 1, delay: 1.45 }}
           >
             <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-15" />
             {t("cta")}
           </motion.a>
-        </div>
-
-        {/* ── Foto ── */}
-        <div className="relative flex items-end justify-start h-screen">
-          {/* Poeira na frente da foto */}
-          <div className="absolute inset-0 z-[6] pointer-events-none">
-            <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={500} opacity={0.14} />
-          </div>
-          {/* Brilho de chão */}
-          <div
-            className="absolute bottom-0 left-0 h-4/5 pointer-events-none z-2"
-            style={{
-              width: `calc(100vh * ${PHOTO_RATIO})`,
-              background:
-                "radial-gradient(ellipse at 50% 100%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.07) 30%, rgba(255,255,255,0.02) 58%, transparent 75%)",
-            }}
-          />
-
-          {/* Brilho de mouse */}
-          <div
-            className="absolute w-95 h-130 rounded-full blur-[100px] pointer-events-none z-2"
-            style={{
-              background: `radial-gradient(ellipse at ${glowPos.x}% ${glowPos.y}%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 50%, transparent 72%)`,
-            }}
-          />
-
-          {/* Container 3D */}
-          <div
-            className="relative z-4 h-screen flex items-end"
-            style={{ perspective: "900px" }}
-          >
-            <motion.div
-              style={{
-                transform: `translate(${translateX}px, ${translateY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
-                transformStyle: "preserve-3d",
-                willChange: "transform",
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.4, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {/* Frame com proporção original da foto */}
-              <div
-                className="relative h-screen"
-                style={{ width: `calc(100vh * ${PHOTO_RATIO})` }}
-              >
-                <Image
-                  src="/photo.png"
-                  alt="Miguel"
-                  fill
-                  priority
-                  className="object-contain object-bottom mix-blend-lighten"
-                  style={{
-                    filter:
-                      "grayscale(1) contrast(1.05) brightness(0.88) drop-shadow(0 0 72px rgba(255,255,255,0.06)) drop-shadow(0 0 140px rgba(255,255,255,0.03))",
-                    opacity: 1,
-                  }}
-                />
-              </div>
-            </motion.div>
-          </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* ── Rodapé ── */}
