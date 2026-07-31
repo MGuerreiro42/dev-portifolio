@@ -25,7 +25,7 @@ export default function LocaleSwitcher() {
           href="/"
           locale={l.code}
           className={[
-            "font-light text-[10px] tracking-[0.18em] uppercase no-underline px-2.5 py-1 rounded-full transition-colors duration-[350ms]",
+            "font-light text-[11px] tracking-[0.18em] uppercase no-underline px-2.5 py-1 rounded-full transition-colors duration-[350ms]",
             locale === l.code
               ? "text-[#f0ede8]/90 bg-white/10"
               : "text-[#f0ede8]/35 hover:text-[#f0ede8]/70",

@@ -167,7 +167,7 @@ export default function WorkSection() {
                   : "opacity-0 -translate-y-2",
               ].join(" ")}
             >
-              <p className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.35]">
+              <p className="font-light text-[10px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.35]">
                 {t(`projects.${project.id}.category`)} · {project.year}
               </p>
             </div>
@@ -196,7 +196,7 @@ export default function WorkSection() {
                     : "opacity-0 translate-y-4 pointer-events-none",
                 ].join(" ")}
               >
-                <p className="font-light text-[12px] leading-[1.9] text-[#f0ede8]/[0.38] max-w-[380px]">
+                <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.38] max-w-[380px]">
                   {t(`projects.${project.id}.description`)}
                 </p>
 
@@ -204,7 +204,7 @@ export default function WorkSection() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="font-light text-[9px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
+                      className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
                     >
                       {tag}
                     </span>
@@ -217,7 +217,7 @@ export default function WorkSection() {
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                      className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
                     >
                       <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
                       {t("viewLive")}
@@ -227,7 +227,7 @@ export default function WorkSection() {
                     href={project.repoHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                    className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
                   >
                     <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
                     {t("viewCode")}

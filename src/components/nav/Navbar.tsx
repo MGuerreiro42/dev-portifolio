@@ -8,7 +8,7 @@ import { useSectionContext } from "@/context/SectionContext";
 const NAV_KEYS = ["home", "about", "work", "contact"] as const;
 
 const baseLinkClass =
-  "font-light text-[10px] leading-none tracking-[0.32em] uppercase no-underline px-5 py-1 transition-colors duration-[350ms] cursor-pointer";
+  "font-light text-[11px] leading-none tracking-[0.32em] uppercase no-underline px-5 py-1 transition-colors duration-[350ms] cursor-pointer";
 
 export default function Navbar() {
   const { scrollToIndex, currentIndex } = useSectionContext();
