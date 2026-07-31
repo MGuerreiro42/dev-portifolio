@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { ChevronDown, ExternalLink } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import { TECH_ICONS } from "@/lib/techIcons";
+import { TECH_ICONS, TECH_COLORS } from "@/lib/techIcons";
 import TechPill from "@/components/ui/TechPill";
 
 /** Indicador "ao vivo" — bolinha vermelha com oscilação de brilho, como um sinal de REC. */
@@ -196,16 +196,24 @@ export default function WorkSection() {
 
             {/* Faixa com blur sobre a imagem — mesmo tratamento do estado
                 minimizado, mas só na área do texto, para manter a imagem
-                nítida no resto do painel quando ativo. O box-shadow projeta
-                para cima, como se a faixa fosse uma superfície sobrevoando
-                a imagem nítida logo acima dela. */}
+                nítida no resto do painel. No hover é só uma faixa estreita
+                em volta do título/ícones (a imagem já fica nítida no hover,
+                então precisa de contraste ali); ao selecionar, a mesma faixa
+                expande até a base do painel para cobrir a descrição. O
+                box-shadow projeta para cima, como se a faixa fosse uma
+                superfície sobrevoando a imagem nítida logo acima dela. */}
             <div
               className={[
-                "absolute left-0 right-0 bottom-0 backdrop-blur-md bg-black/20 shadow-[0_-30px_40px_-12px_rgba(0,0,0,0.6)]",
-                "transition-opacity duration-500",
-                active === i ? "opacity-100" : "opacity-0 pointer-events-none",
+                "absolute left-0 right-0 backdrop-blur-md bg-black/20 shadow-[0_-30px_40px_-12px_rgba(0,0,0,0.6)]",
+                "transition-[opacity,top,bottom] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                active === i || hovered === i
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none",
               ].join(" ")}
-              style={{ top: "calc(50% - 150px)" }}
+              style={{
+                top: active === i ? "calc(50% - 150px)" : "calc(50% - 70px)",
+                bottom: active === i ? "0px" : "calc(50% - 55px)",
+              }}
             />
 
             {/* Topo — categoria + ano, visível só quando ativo */}
@@ -253,10 +261,12 @@ export default function WorkSection() {
                 <div className="flex items-center gap-2.5">
                   {project.tags.map((tag) => {
                     const Icon = TECH_ICONS[tag];
+                    const color = TECH_COLORS[tag];
                     return Icon ? (
                       <Icon
                         key={tag}
                         className="w-[15px] h-[15px] text-[#f0ede8]/45"
+                        style={color ? { color, opacity: 0.85 } : undefined}
                       />
                     ) : null;
                   })}
@@ -362,10 +372,12 @@ export default function WorkSection() {
                 <div className="flex items-center gap-2.5">
                   {project.tags.map((tag) => {
                     const Icon = TECH_ICONS[tag];
+                    const color = TECH_COLORS[tag];
                     return Icon ? (
                       <Icon
                         key={tag}
                         className="w-[15px] h-[15px] text-[#f0ede8]/45"
+                        style={color ? { color, opacity: 0.85 } : undefined}
                       />
                     ) : null;
                   })}
