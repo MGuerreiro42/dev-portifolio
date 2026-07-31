@@ -196,10 +196,12 @@ export default function WorkSection() {
 
             {/* Faixa com blur sobre a imagem — mesmo tratamento do estado
                 minimizado, mas só na área do texto, para manter a imagem
-                nítida no resto do painel quando ativo */}
+                nítida no resto do painel quando ativo. O box-shadow projeta
+                para cima, como se a faixa fosse uma superfície sobrevoando
+                a imagem nítida logo acima dela. */}
             <div
               className={[
-                "absolute left-0 right-0 bottom-0 backdrop-blur-md bg-black/20",
+                "absolute left-0 right-0 bottom-0 backdrop-blur-md bg-black/20 shadow-[0_-30px_40px_-12px_rgba(0,0,0,0.6)]",
                 "transition-opacity duration-500",
                 active === i ? "opacity-100" : "opacity-0 pointer-events-none",
               ].join(" ")}
