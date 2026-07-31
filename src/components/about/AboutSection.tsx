@@ -21,8 +21,8 @@ export default function AboutSection() {
       {/* Linha divisória do topo */}
       <div className="absolute top-0 left-6 right-6 md:left-24 md:right-24 h-px bg-white/[0.06]" />
 
-      {/* ── Coluna esquerda ── */}
-      <div className="flex flex-col">
+      {/* ── Coluna esquerda — deslocada para cima, mais perto do centro */}
+      <div className="flex flex-col md:-translate-y-[30px]">
         <Reveal delay={0.05} className="mb-10">
           <p className="font-light text-[10px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.18]">
             {t("label")}
@@ -39,7 +39,7 @@ export default function AboutSection() {
               className="object-cover"
             />
           </div>
-          <p className="font-light text-[14px] leading-[1.85] text-[#f0ede8]/60">
+          <p className="font-light text-[14px] leading-[1.85] text-[#f0ede8]/60 text-justify">
             {t("bio")}
           </p>
         </Reveal>
@@ -62,8 +62,8 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* ── Coluna direita ── */}
-      <div className="flex flex-col justify-between">
+      {/* ── Coluna direita — mais deslocada para baixo que a esquerda */}
+      <div className="flex flex-col justify-between md:translate-y-[130px]">
         {/* Quote */}
         <Reveal delay={0.2} className="mb-10">
           <p className="font-display text-[clamp(22px,2.8vw,38px)] leading-[1.18] tracking-[-0.01em] uppercase text-[#f0ede8]">
