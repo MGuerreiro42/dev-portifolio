@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useHero } from "./useHero";
 import { usePanelFloat } from "./usePanelFloat";
+import { useIsFirefox } from "./useIsFirefox";
 import DustField from "./DustField";
 import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 
@@ -18,6 +19,7 @@ export default function HeroSection() {
     rotateY,
     translateY: panelFloatY,
   } = usePanelFloat();
+  const isFirefox = useIsFirefox();
 
   return (
     <div
@@ -59,7 +61,10 @@ export default function HeroSection() {
           ref={panelRef}
           onMouseMove={handlePanelMouseMove}
           onMouseLeave={handlePanelMouseLeave}
-          className="flex flex-col items-center text-center rounded-[32px] border border-white/8 backdrop-blur-sm shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
+          className={[
+            "relative flex flex-col items-center text-center rounded-[32px] border border-white/8 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]",
+            isFirefox ? "overflow-hidden bg-black" : "backdrop-blur-sm",
+          ].join(" ")}
           style={{
             transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${panelFloatY}px)`,
             transformStyle: "preserve-3d",
@@ -69,7 +74,23 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <motion.h1
+          {/* Firefox não renderiza backdrop-filter com transform 3D no
+              ancestral (bug do WebRender, sem previsão de correção) — nesse
+              caso, desenhamos uma cópia borrada da grade em vez do blur ao vivo. */}
+          {isFirefox && (
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.22) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.22) 2px, transparent 2px)",
+                backgroundSize: "56px 56px",
+                filter: "blur(6px)",
+              }}
+            />
+          )}
+
+          <div className="relative z-[1] flex flex-col items-center text-center">
+            <motion.h1
             className="font-display text-[clamp(44px,6.4vw,96px)] leading-[0.94] tracking-[-0.01em] text-[#f0ede8] uppercase"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
@@ -107,6 +128,7 @@ export default function HeroSection() {
             <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-15" />
             {t("cta")}
           </motion.a>
+          </div>
         </motion.div>
       </div>
 
