@@ -1,14 +1,16 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Reveal from "@/components/ui/Reveal";
 
 const SOCIALS = [
-  { label: "Github", href: "https://github.com/" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/" },
-  { label: "Instagram", href: "https://instagram.com/" },
+  { label: "Github", href: "https://github.com/MGuerreiro42" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/miguelpguerreiro" },
 ];
 
 export default function ContactSection() {
+  const t = useTranslations("Contact");
+
   return (
     <section
       id="contact"
@@ -19,22 +21,16 @@ export default function ContactSection() {
 
       {/* ── Metade superior ── */}
       <div className="flex flex-col items-center justify-end flex-1 pb-0 px-24">
-        <Reveal delay={0.05} className="mb-8">
-          <p className="font-light text-[9px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.18]">
-            Communication_Uplink
-          </p>
-        </Reveal>
-
         {/* Headline com reveal palavra por palavra */}
-        <div className="flex gap-[0.25em] overflow-hidden">
+        <div className="flex gap-[clamp(18px,2.75vw,45px)] overflow-hidden">
           <Reveal delay={0.12}>
             <h2 className="font-display text-[clamp(72px,11vw,180px)] leading-[0.85] tracking-[-0.02em] uppercase text-[#f0ede8]">
-              Let's
+              {t("heading1")}
             </h2>
           </Reveal>
           <Reveal delay={0.22}>
             <h2 className="font-display text-[clamp(72px,11vw,180px)] leading-[0.85] tracking-[-0.02em] uppercase text-[#f0ede8]">
-              Build
+              {t("heading2")}
             </h2>
           </Reveal>
         </div>
@@ -57,10 +53,10 @@ export default function ContactSection() {
         {/* Email */}
         <Reveal delay={0.1}>
           <a
-            href="mailto:miguel@email.com"
+            href="mailto:miguelpachiega@gmail.com"
             className="font-display text-[clamp(18px,2.4vw,36px)] tracking-[0.12em] uppercase text-[#f0ede8] no-underline transition-colors duration-500 hover:text-[#f0ede8]/50"
           >
-            miguel@email.com
+            miguelpachiega@gmail.com
           </a>
         </Reveal>
 
@@ -72,7 +68,7 @@ export default function ContactSection() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-light text-[9px] tracking-[0.45em] uppercase text-[#f0ede8]/[0.28] no-underline transition-colors duration-350 hover:text-[#f0ede8]/70"
+                className="font-light text-[9px] tracking-[0.45em] uppercase text-[#f0ede8]/[0.65] no-underline transition-colors duration-350 hover:text-[#f0ede8]/95"
               >
                 {social.label}
               </a>
@@ -81,16 +77,11 @@ export default function ContactSection() {
         </div>
       </div>
 
-      {/* ── Rodapé de metadados ── */}
-      <div className="relative z-10 flex items-center justify-between px-24 py-5 border-t border-white/[0.06]">
+      {/* ── Rodapé ── */}
+      <div className="relative z-10 flex items-center justify-center px-24 py-5 border-t border-white/[0.06]">
         <Reveal delay={0.05}>
           <p className="font-light text-[8px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.18]">
-            ©2025 <span className="font-light">Miguel_Portfolio_V.01</span>
-          </p>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="font-light text-[8px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.18]">
-            Lat: -22.7415 &nbsp;·&nbsp; Long: -47.3317 &nbsp;·&nbsp; Americana, SP · Brazil
+            {t("footer", { year: new Date().getFullYear() })}
           </p>
         </Reveal>
       </div>

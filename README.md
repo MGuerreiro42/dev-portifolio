@@ -1,5 +1,11 @@
 # Miguel Guerreiro — Portfolio
 
+[![CI](https://github.com/MGuerreiro42/dev-portifolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MGuerreiro42/dev-portifolio/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js&style=flat-square)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white&style=flat-square)
+![Tailwind](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white&style=flat-square)
+
 Personal portfolio built with Next.js 15, React 19, TypeScript, Tailwind CSS 4, Framer Motion and Three.js. Designed with obsessive attention to motion, spacing and visual depth.
 
 **Live demo:** _add your URL here_
@@ -57,12 +63,10 @@ src/
       Navbar.tsx        # Top navigation bar
     ui/
       Reveal.tsx        # Scroll-triggered reveal animation wrapper
-      button.tsx        # shadcn Button component
     ScrollContainer.tsx # Smooth scroll orchestrator between sections
     SectionIndicator.tsx# Active section dot indicator
   context/
     SectionContext.tsx  # Global active section state
-  hooks/               # Custom hooks
   lib/
     utils.ts           # cn() utility (clsx + tailwind-merge)
 public/
@@ -84,8 +88,8 @@ public/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/portfolio-nextjs.git
-cd portfolio-nextjs
+git clone git@github.com:MGuerreiro42/dev-portifolio.git
+cd dev-portifolio
 
 # Install dependencies
 pnpm install
@@ -115,7 +119,7 @@ Update the following files with your own data:
 
 - **`src/components/hero/HeroSection.tsx`** — name, title, location
 - **`src/components/about/AboutSection.tsx`** — `EXPERIENCE`, `COMPETENCIES`, `TECH_STACK` arrays
-- **`src/components/work/WorkSection.tsx`** — `PROJECTS` array (title, description, tags, image, href)
+- **`src/components/work/WorkSection.tsx`** — `PROJECTS` array (title, description, tags, image, `href` for a live demo — omit it for projects with no public deploy — and `repoHref` for the GitHub repo)
 - **`src/components/contact/ContactSection.tsx`** — email address and social links
 
 ### Profile photo
@@ -163,6 +167,6 @@ This project is open source under the [MIT License](LICENSE).
 
 ## Author
 
-**Miguel Guerreiro** — Software Engineer & Front-End Developer
+**Miguel Pachiega Guerreiro** — Software Engineer & Front-End Developer
 Americana, SP · Brazil
-[GitHub](https://github.com/) · [LinkedIn](https://linkedin.com/in/) · [Instagram](https://instagram.com/)
+[GitHub](https://github.com/MGuerreiro42) · [LinkedIn](https://linkedin.com/in/miguelpguerreiro)

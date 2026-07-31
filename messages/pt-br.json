@@ -1,0 +1,75 @@
+{
+  "Metadata": {
+    "title": "Miguel — Desenvolvedor Front-end",
+    "description": "Portfólio de Miguel Guerreiro — desenvolvedor front-end focado em React, Next.js e interfaces simples e fáceis de manter."
+  },
+  "Nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "work": "Projetos",
+    "contact": "Contato"
+  },
+  "Hero": {
+    "name": "Miguel Guerreiro",
+    "subtitle": "React · TypeScript · Node.js",
+    "cta": "Ver Projetos",
+    "location": "Baseado em Americana, SP · Brasil"
+  },
+  "About": {
+    "label": "Biography_Log",
+    "headingLine1": "Atenção",
+    "headingLine2": "aos Detalhes.",
+    "quotePrefix": "Eu transformo produtos complexos em interfaces",
+    "quoteHighlight": "rápidas, claras e fáceis de manter.",
+    "paragraph": "8 anos de experiência em front-end — desde definir direção técnica até cuidar dos detalhes que fazem um produto funcionar bem.",
+    "competenciesLabel": "Competências Principais",
+    "techStackLabel": "Stack Selecionada",
+    "competencies": [
+      "Arquitetura Front-end",
+      "Liderança Técnica",
+      "Design Systems",
+      "Micro Frontends"
+    ],
+    "experience": {
+      "luizalabs": {
+        "period": "Out 2019 — Jul 2026",
+        "role": "Software Engineer (Front-end) @ Luizalabs"
+      },
+      "castGroup": {
+        "period": "Set 2018 — Out 2019",
+        "role": "Web Developer @ Cast Group"
+      }
+    }
+  },
+  "Work": {
+    "viewLive": "Ver no Ar",
+    "viewCode": "Ver Código",
+    "projects": {
+      "miniTms": {
+        "category": "Aplicação Full-Stack",
+        "description": "Sistema de gestão de transportes multi-tenant com rastreamento de entregas em tempo real — NestJS, Next.js, PostgreSQL e Redis pub/sub, construído para demonstrar modelagem de domínio real e uma arquitetura de tempo real escalável horizontalmente."
+      },
+      "vigilDashboard": {
+        "category": "Visualização de Dados",
+        "description": "Um painel de monitoramento global ao vivo que reúne mercado de criptomoedas, rastreamento da ISS, atividade sísmica, clima e notícias numa única interface em tempo real — React, um globo em Three.js, WebSocket e polling REST lado a lado."
+      },
+      "realtimeCommunication": {
+        "category": "Demo Técnica",
+        "description": "Uma comparação interativa, lado a lado, entre Polling, Long Polling, Server-Sent Events e WebSocket — streams de eventos ao vivo para cada técnica, além de uma apresentação técnica bilíngue aprofundada."
+      },
+      "dineOutApp": {
+        "category": "App Mobile",
+        "description": "Um app de descoberta de restaurantes e bares — navegue por tipo de culinária, ocasião e clima, veja cardápio e avaliações. Expo/React Native, construído com um fluxo orientado a especificações; hoje um protótipo navegável para parceiros de negócio."
+      },
+      "portfolio": {
+        "category": "Projeto Pessoal",
+        "description": "Este mesmo portfólio — construído com Next.js, Three.js e Framer Motion."
+      }
+    }
+  },
+  "Contact": {
+    "heading1": "Vamos",
+    "heading2": "Criar",
+    "footer": "© {year} Miguel_Portfolio_V.01 — Americana, SP · Brasil"
+  }
+}

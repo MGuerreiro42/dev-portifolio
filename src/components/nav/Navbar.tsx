@@ -2,40 +2,42 @@
 
 import { Fragment } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useSectionContext } from "@/context/SectionContext";
 
-const NAV_LINKS = [
-  { label: "Home",    index: 0 },
-  { label: "About",   index: 1 },
-  { label: "Work",    index: 2 },
-  { label: "Contact", index: 3 },
-];
+const NAV_KEYS = ["home", "about", "work", "contact"] as const;
 
-const linkClass =
-  "font-light text-[10px] tracking-[0.32em] uppercase text-[#f0ede8]/[0.38] no-underline px-8 transition-colors duration-[350ms] hover:text-[#f0ede8]/80 cursor-pointer";
+const baseLinkClass =
+  "font-light text-[10px] leading-none tracking-[0.32em] uppercase no-underline px-6 py-1 transition-colors duration-[350ms] cursor-pointer";
 
 export default function Navbar() {
-  const { scrollToIndex } = useSectionContext();
+  const { scrollToIndex, currentIndex } = useSectionContext();
+  const t = useTranslations("Nav");
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-[100] py-9 flex justify-center"
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex items-center rounded-full border border-white/10 bg-black/40 px-3 py-2.5 backdrop-blur-md"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
     >
       <ul className="flex items-center list-none">
-        {NAV_LINKS.map((link, i) => (
-          <Fragment key={link.label}>
+        {NAV_KEYS.map((key, i) => (
+          <Fragment key={key}>
             {i > 0 && (
               <li className="w-px h-[10px] bg-[#f0ede8]/[0.14] shrink-0" />
             )}
             <li>
               <button
-                onClick={() => scrollToIndex(link.index)}
-                className={linkClass}
+                onClick={() => scrollToIndex(i)}
+                className={[
+                  baseLinkClass,
+                  currentIndex === i
+                    ? "text-[#f0ede8]/80"
+                    : "text-[#f0ede8]/[0.38] hover:text-[#f0ede8]/80",
+                ].join(" ")}
               >
-                {link.label}
+                {t(key)}
               </button>
             </li>
           </Fragment>

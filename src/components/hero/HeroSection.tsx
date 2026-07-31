@@ -1,15 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useHero } from "./useHero";
 import DustField from "./DustField";
-import Navbar from "@/components/nav/Navbar";
+import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 
 /* Proporção original da foto: 1536 × 2730 ≈ 0.5629 */
 const PHOTO_RATIO = 1536 / 2730;
 
 export default function HeroSection() {
+  const t = useTranslations("Hero");
   const {
     containerRef,
     mouseXRef,
@@ -32,7 +34,7 @@ export default function HeroSection() {
     >
       <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={2000} opacity={0.22} />
 
-      <Navbar />
+      <LocaleSwitcher />
 
       <div className="flex-1 grid grid-cols-2 items-start min-h-screen px-24 relative z-[5] overflow-visible">
 
@@ -44,7 +46,7 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.0 }}
           >
-            Miguel Guerreiro
+            {t("name")}
           </motion.p>
 
           <motion.h1
@@ -63,7 +65,7 @@ export default function HeroSection() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.4 }}
           >
-            React · TypeScript · System Design
+            {t("subtitle")}
           </motion.p>
 
           <motion.a
@@ -74,7 +76,7 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 1.65 }}
           >
             <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-15" />
-            Ver Projetos
+            {t("cta")}
           </motion.a>
         </div>
 
@@ -148,7 +150,7 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2.0 }}
       >
-        Based in Americana, SP · Brazil
+        {t("location")}
       </motion.span>
     </div>
   );
