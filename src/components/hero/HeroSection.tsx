@@ -59,7 +59,6 @@ export default function HeroSection() {
           ref={panelRef}
           onMouseMove={handlePanelMouseMove}
           onMouseLeave={handlePanelMouseLeave}
-          className="flex flex-col items-center text-center rounded-[32px] border border-white/8 backdrop-blur-sm shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
           style={{
             transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${panelFloatY}px)`,
             transformStyle: "preserve-3d",
@@ -69,6 +68,22 @@ export default function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
+          {/* backdrop-filter não reproduz o blur no Firefox quando um ancestral
+              tem transform 3D (o tilt do hover) — em vez de depender do live
+              compositing, desenhamos uma cópia borrada da própria grade de
+              fundo dentro do painel. Como o padrão é periódico, uma versão
+              borrada dele fica idêntica em qualquer navegador. */}
+          <div className="relative flex flex-col items-center text-center overflow-hidden rounded-[32px] border border-white/8 bg-black shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]">
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.22) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.22) 2px, transparent 2px)",
+                backgroundSize: "56px 56px",
+                filter: "blur(6px)",
+              }}
+            />
+          <div className="relative z-[1] flex flex-col items-center text-center">
           <motion.h1
             className="font-display text-[clamp(44px,6.4vw,96px)] leading-[0.94] tracking-[-0.01em] text-[#f0ede8] uppercase"
             initial={{ opacity: 0, y: 28 }}
@@ -107,6 +122,8 @@ export default function HeroSection() {
             <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-15" />
             {t("cta")}
           </motion.a>
+          </div>
+          </div>
         </motion.div>
       </div>
 

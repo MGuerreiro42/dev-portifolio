@@ -15,34 +15,38 @@ export default function Navbar() {
   const t = useTranslations("Nav");
 
   return (
-    <motion.nav
-      className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] flex items-center rounded-full border border-white/10 bg-black/40 px-2 py-1.5 backdrop-blur-md"
+    <motion.div
+      className="fixed top-5 left-1/2 -translate-x-1/2 z-[100]"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
     >
-      <ul className="flex items-center list-none">
-        {NAV_KEYS.map((key, i) => (
-          <Fragment key={key}>
-            {i > 0 && (
-              <li className="w-px h-[10px] bg-[#f0ede8]/[0.14] shrink-0" />
-            )}
-            <li>
-              <button
-                onClick={() => scrollToIndex(i)}
-                className={[
-                  baseLinkClass,
-                  currentIndex === i
-                    ? "text-[#f0ede8]/80"
-                    : "text-[#f0ede8]/[0.38] hover:text-[#f0ede8]/80",
-                ].join(" ")}
-              >
-                {t(key)}
-              </button>
-            </li>
-          </Fragment>
-        ))}
-      </ul>
-    </motion.nav>
+      {/* backdrop-blur precisa ficar num elemento sem transform próprio —
+          combinar os dois no mesmo elemento quebra o blur no Firefox. */}
+      <nav className="flex items-center rounded-full border border-white/10 bg-black/40 px-2 py-1.5 backdrop-blur-md">
+        <ul className="flex items-center list-none">
+          {NAV_KEYS.map((key, i) => (
+            <Fragment key={key}>
+              {i > 0 && (
+                <li className="w-px h-[10px] bg-[#f0ede8]/[0.14] shrink-0" />
+              )}
+              <li>
+                <button
+                  onClick={() => scrollToIndex(i)}
+                  className={[
+                    baseLinkClass,
+                    currentIndex === i
+                      ? "text-[#f0ede8]/80"
+                      : "text-[#f0ede8]/[0.38] hover:text-[#f0ede8]/80",
+                  ].join(" ")}
+                >
+                  {t(key)}
+                </button>
+              </li>
+            </Fragment>
+          ))}
+        </ul>
+      </nav>
+    </motion.div>
   );
 }
