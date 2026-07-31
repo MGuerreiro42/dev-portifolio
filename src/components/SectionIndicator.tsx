@@ -9,7 +9,7 @@ interface SectionIndicatorProps {
 
 export default function SectionIndicator({ current, onDotClick }: SectionIndicatorProps) {
   return (
-    <div data-indicator="true" className="fixed right-8 top-1/2 -translate-y-1/2 z-[200] flex flex-col gap-3">
+    <div data-indicator="true" className="fixed right-8 top-1/2 -translate-y-1/2 z-[200] hidden md:flex flex-col gap-3">
       {SECTIONS.map((_, i) => (
         <button
           key={i}

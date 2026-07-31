@@ -14,13 +14,13 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative w-full h-screen bg-black flex flex-col overflow-hidden sticky top-0 z-[4]"
+      className="relative w-full min-h-screen md:h-screen bg-black flex flex-col overflow-hidden md:sticky md:top-0 z-[4]"
     >
       {/* Linha divisória do topo */}
       <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.06] z-10" />
 
       {/* ── Metade superior ── */}
-      <div className="flex flex-col items-center justify-end flex-1 pb-0 px-24">
+      <div className="flex flex-col items-center justify-end flex-1 pb-0 px-6 md:px-24">
         {/* Headline com reveal palavra por palavra */}
         <div className="flex gap-[clamp(18px,2.75vw,45px)] overflow-hidden">
           <Reveal delay={0.12}>
@@ -78,7 +78,7 @@ export default function ContactSection() {
       </div>
 
       {/* ── Rodapé ── */}
-      <div className="relative z-10 flex items-center justify-center px-24 py-5 border-t border-white/[0.06]">
+      <div className="relative z-10 flex items-center justify-center px-6 md:px-24 py-5 border-t border-white/[0.06]">
         <Reveal delay={0.05} margin={0}>
           <p className="font-light text-[9px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.18]">
             {t("footer", { year: new Date().getFullYear() })}

@@ -26,7 +26,7 @@ export default function HeroSection() {
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-screen bg-black flex flex-col overflow-hidden sticky top-0 z-[1]"
+      className="relative w-full min-h-screen md:h-screen bg-black flex flex-col overflow-hidden md:sticky md:top-0 z-[1]"
     >
       <div
         className="absolute inset-0 z-0 pointer-events-none"
@@ -133,9 +133,9 @@ export default function HeroSection() {
       </div>
 
       {/* ── Rodapé ── */}
-      <div className="absolute bottom-9.5 left-24 right-24 h-px bg-white/4 z-10" />
+      <div className="absolute bottom-9.5 left-6 right-6 md:left-24 md:right-24 h-px bg-white/4 z-10" />
       <motion.span
-        className="absolute bottom-11.5 right-24 font-light text-[9px] tracking-[0.45em] uppercase text-[#f0ede8]/12"
+        className="absolute bottom-11.5 left-6 right-6 md:left-auto md:right-24 text-right font-light text-[9px] tracking-[0.45em] uppercase text-[#f0ede8]/12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2.0 }}
