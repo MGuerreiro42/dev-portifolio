@@ -36,9 +36,16 @@ export default function ScrollContainer({
 
       isAnimating.current = true;
       const startY = container.scrollTop;
-      // offsetTop (não index * clientHeight) funciona tanto no modo desktop
-      // (seções de exatamente uma tela) quanto no mobile (altura variável).
-      const targetY = sections[index].offsetTop;
+      // No desktop as seções são sticky + exatamente uma tela, então
+      // offsetTop não é confiável (sticky some navegadores retornam a
+      // posição "presa" atual em vez da posição estática original, uma vez
+      // que a seção já foi ultrapassada no scroll) — usamos index * altura,
+      // que é sempre exato nesse modo. No mobile as seções têm altura
+      // variável (Work vira lista), então precisamos do offsetTop real.
+      const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+      const targetY = isDesktop
+        ? index * container.clientHeight
+        : sections[index].offsetTop;
       const distance = targetY - startY;
       const startTime = performance.now();
 
