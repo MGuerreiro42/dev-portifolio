@@ -74,7 +74,7 @@ export default function HeroSection() {
             transition={{ duration: 1, delay: 1.65 }}
           >
             <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-15" />
-            Ver Projetos
+            View Work
           </motion.a>
         </div>
 

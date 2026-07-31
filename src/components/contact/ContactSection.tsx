@@ -3,9 +3,8 @@
 import Reveal from "@/components/ui/Reveal";
 
 const SOCIALS = [
-  { label: "Github", href: "https://github.com/" },
-  { label: "LinkedIn", href: "https://linkedin.com/in/" },
-  { label: "Instagram", href: "https://instagram.com/" },
+  { label: "Github", href: "https://github.com/MGuerreiro42" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/miguelpguerreiro" },
 ];
 
 export default function ContactSection() {
@@ -29,7 +28,7 @@ export default function ContactSection() {
         <div className="flex gap-[0.25em] overflow-hidden">
           <Reveal delay={0.12}>
             <h2 className="font-display text-[clamp(72px,11vw,180px)] leading-[0.85] tracking-[-0.02em] uppercase text-[#f0ede8]">
-              Let's
+              Let&apos;s
             </h2>
           </Reveal>
           <Reveal delay={0.22}>
@@ -57,10 +56,10 @@ export default function ContactSection() {
         {/* Email */}
         <Reveal delay={0.1}>
           <a
-            href="mailto:miguel@email.com"
+            href="mailto:miguelpachiega@gmail.com"
             className="font-display text-[clamp(18px,2.4vw,36px)] tracking-[0.12em] uppercase text-[#f0ede8] no-underline transition-colors duration-500 hover:text-[#f0ede8]/50"
           >
-            miguel@email.com
+            miguelpachiega@gmail.com
           </a>
         </Reveal>
 
@@ -85,7 +84,7 @@ export default function ContactSection() {
       <div className="relative z-10 flex items-center justify-between px-24 py-5 border-t border-white/[0.06]">
         <Reveal delay={0.05}>
           <p className="font-light text-[8px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.18]">
-            ©2025 <span className="font-light">Miguel_Portfolio_V.01</span>
+            ©{new Date().getFullYear()} <span className="font-light">Miguel_Portfolio_V.01</span>
           </p>
         </Reveal>
         <Reveal delay={0.1}>

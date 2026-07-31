@@ -3,18 +3,18 @@
 import Reveal from "@/components/ui/Reveal";
 
 const EXPERIENCE = [
-  { period: "2023 — Current", role: "Software Engineer @ Stefanini" },
-  { period: "2022 — 2023", role: "Frontend Dev @ Freelance" },
+  { period: "Oct 2019 — Present", role: "Software Engineer (Front-end) @ Luizalabs" },
+  { period: "Sep 2018 — Oct 2019", role: "Web Developer @ Cast Group" },
 ];
 
 const COMPETENCIES = [
-  "Interface Engineering",
+  "Front-end Architecture",
   "Motion Design",
   "Design Systems",
   "Performance Optimization",
 ];
 
-const TECH_STACK = ["React", "Next.js", "TypeScript", "Tailwind", "Three.js"];
+const TECH_STACK = ["React", "Next.js", "TypeScript", "Node.js", "Tailwind", "Three.js"];
 
 export default function AboutSection() {
   return (

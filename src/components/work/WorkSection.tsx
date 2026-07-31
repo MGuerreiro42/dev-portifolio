@@ -11,39 +11,64 @@ interface Project {
   description: string;
   tags: string[];
   image: string;
-  href: string;
+  /** Live demo — omitted when the project has no public deploy (e.g. a mobile-only app). */
+  href?: string;
+  /** GitHub repository — always present. */
+  repoHref: string;
 }
 
 const PROJECTS: Project[] = [
   {
+    title: "Mini TMS",
+    category: "Full-Stack Application",
+    year: "2026",
+    description:
+      "Multi-tenant transportation management system with real-time delivery tracking — NestJS, Next.js, PostgreSQL and Redis pub/sub, built to demonstrate real domain modeling and a horizontally-scalable real-time architecture.",
+    tags: ["NestJS", "Next.js", "PostgreSQL", "Redis", "WebSocket"],
+    image: "/projects/mini-tms.png",
+    href: "https://mini-tms-logitrack.vercel.app",
+    repoHref: "https://github.com/MGuerreiro42/mini-tms-logitrack",
+  },
+  {
+    title: "Vigil Dashboard",
+    category: "Data Visualization",
+    year: "2026",
+    description:
+      "A live global monitoring dashboard aggregating crypto markets, ISS tracking, seismic activity, weather and news into one real-time interface — React, a Three.js globe, WebSocket and REST polling side by side.",
+    tags: ["React", "TypeScript", "Three.js", "WebSocket"],
+    image: "/projects/vigil-dashboard.png",
+    repoHref: "https://github.com/MGuerreiro42/vigil-dashboard",
+  },
+  {
+    title: "Real-Time Communication",
+    category: "Technical Demo",
+    year: "2026",
+    description:
+      "An interactive, side-by-side comparison of Polling, Long Polling, Server-Sent Events and WebSocket — live event streams for each technique, plus a bilingual technical deep-dive presentation.",
+    tags: ["Next.js", "Express", "WebSocket", "SSE"],
+    image: "/projects/realtime-communication.png",
+    href: "https://realtime-comunication-talk.vercel.app",
+    repoHref: "https://github.com/MGuerreiro42/realtime-comunication-talk",
+  },
+  {
+    title: "Dine Out App",
+    category: "Mobile App",
+    year: "2026",
+    description:
+      "A restaurant and bar discovery app — browse by cuisine, occasion and vibe, dig into a menu and reviews. Expo/React Native, built with a spec-driven workflow; currently a navigable prototype for business partners.",
+    tags: ["React Native", "Expo", "TypeScript"],
+    image: "/projects/dine-out-app.png",
+    repoHref: "https://github.com/MGuerreiro42/dine-out-app",
+  },
+  {
     title: "Portfolio",
     category: "Personal Project",
-    year: "2025",
+    year: "2026",
     description:
       "This very portfolio — built with Next.js, Three.js and Framer Motion. Obsessive attention to motion, detail and visual depth.",
     tags: ["Next.js", "Three.js", "Framer Motion", "Tailwind"],
     image: "/portfolio.png",
-    href: "#",
-  },
-  {
-    title: "Project Two",
-    category: "Web Application",
-    year: "2024",
-    description:
-      "Short description of what this project is about and the problems it solves. Replace with your real project.",
-    tags: ["React", "TypeScript", "Node.js"],
-    image: "/projects/project2.jpg",
-    href: "#",
-  },
-  {
-    title: "Project Three",
-    category: "Interface Design",
-    year: "2023",
-    description:
-      "A project focused on motion design and micro-interactions. Replace with your real project.",
-    tags: ["React", "Framer Motion"],
-    image: "/projects/project3.jpg",
-    href: "#",
+    repoHref: "https://github.com/MGuerreiro42/dev-portifolio",
   },
 ];
 
@@ -191,13 +216,28 @@ export default function WorkSection() {
                   ))}
                 </div>
 
-                <a
-                  href={project.href}
-                  className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65 mt-1"
-                >
-                  <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
-                  Ver Projeto
-                </a>
+                <div className="flex flex-wrap gap-x-10 gap-y-3 mt-1">
+                  {project.href && (
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                    >
+                      <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
+                      View Live
+                    </a>
+                  )}
+                  <a
+                    href={project.repoHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-[18px] font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                  >
+                    <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
+                    View Code
+                  </a>
+                </div>
               </div>
             </div>
           </div>
