@@ -17,8 +17,7 @@
   },
   "About": {
     "label": "Biography_Log",
-    "headingLine1": "Attention",
-    "headingLine2": "to Detail.",
+    "bio": "Software Engineer with 8 years of experience building web applications — focused on React, Next.js, and front-end architecture. I've led the technical evolution of 30+ products, from system design to migrations like Micro Frontends. My background in Digital Design keeps me close to UX, so I work end-to-end: from solution design through implementation and production support, balancing scalability, performance, and developer experience.",
     "quotePrefix": "I turn complex products into interfaces that are",
     "quoteHighlight": "fast, clear, and easy to maintain.",
     "paragraph": "8 years of front-end experience — from defining technical direction to shipping the details that make a product feel right.",
