@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 export default function Brand() {
   return (
     <motion.div
-      className="fixed top-[23.75px] left-24 z-[100] flex items-center rounded-full border border-white/10 bg-black/40 px-4 py-1.5 backdrop-blur-md"
+      className="fixed top-5 left-6 md:top-[23.75px] md:left-24 z-[100] flex items-center rounded-full border border-white/10 bg-black/40 px-4 py-1.5 backdrop-blur-md"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}

@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "lucide-react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Reveal from "@/components/ui/Reveal";
 
@@ -28,10 +28,15 @@ export default function AboutSection() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.15} className="mb-16">
-          {/* Foto (placeholder) — flutua à esquerda, texto contorna e continua embaixo */}
-          <div className="w-[150px] h-[150px] float-left mr-6 mb-3 rounded-full [shape-outside:circle(50%)] bg-white/[0.04] border border-white/[0.12] flex items-center justify-center overflow-hidden">
-            <User className="w-14 h-14 text-white/15" strokeWidth={1} />
+        <Reveal delay={0.15} className="mb-8">
+          {/* Foto — flutua à esquerda, texto contorna e continua embaixo */}
+          <div className="relative w-[150px] h-[150px] float-left mr-6 mb-3 rounded-full [shape-outside:circle(50%)] border border-white/[0.12] overflow-hidden">
+            <Image
+              src="/about-photo.jpg"
+              alt="Miguel Guerreiro"
+              fill
+              className="object-cover"
+            />
           </div>
           <p className="font-light text-[14px] leading-[1.85] text-[#f0ede8]/60">
             {t("bio")}
