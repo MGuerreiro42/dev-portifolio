@@ -99,7 +99,7 @@ export default function HeroSection() {
 
           <motion.a
             href="#work"
-            className="group inline-flex items-center gap-4.5 font-light text-[9px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65 mt-[52px]"
+            className="group inline-flex items-center gap-4.5 font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65 mt-[52px]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1.45 }}
@@ -113,7 +113,7 @@ export default function HeroSection() {
       {/* ── Rodapé ── */}
       <div className="absolute bottom-9.5 left-24 right-24 h-px bg-white/4 z-10" />
       <motion.span
-        className="absolute bottom-11.5 right-24 font-light text-[8px] tracking-[0.45em] uppercase text-[#f0ede8]/12"
+        className="absolute bottom-11.5 right-24 font-light text-[9px] tracking-[0.45em] uppercase text-[#f0ede8]/12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2.0 }}

@@ -8,6 +8,8 @@ interface RevealProps {
   delay?: number;
   duration?: number;
   className?: string;
+  /** Margem do useInView — reduza para elementos próximos à borda do viewport. */
+  margin?: number;
 }
 
 /**
@@ -20,9 +22,10 @@ export default function Reveal({
   delay = 0,
   duration = 0.9,
   className = "",
+  margin = -60,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const isInView = useInView(ref, { once: true, margin: `${margin}px` as `${number}px` });
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>

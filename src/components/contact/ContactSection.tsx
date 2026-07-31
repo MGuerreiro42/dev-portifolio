@@ -68,7 +68,7 @@ export default function ContactSection() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-light text-[9px] tracking-[0.45em] uppercase text-[#f0ede8]/[0.65] no-underline transition-colors duration-350 hover:text-[#f0ede8]/95"
+                className="font-light text-[10px] tracking-[0.45em] uppercase text-[#f0ede8]/[0.65] no-underline transition-colors duration-350 hover:text-[#f0ede8]/95"
               >
                 {social.label}
               </a>
@@ -79,8 +79,8 @@ export default function ContactSection() {
 
       {/* ── Rodapé ── */}
       <div className="relative z-10 flex items-center justify-center px-24 py-5 border-t border-white/[0.06]">
-        <Reveal delay={0.05}>
-          <p className="font-light text-[8px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.18]">
+        <Reveal delay={0.05} margin={0}>
+          <p className="font-light text-[9px] tracking-[0.4em] uppercase text-[#f0ede8]/[0.18]">
             {t("footer", { year: new Date().getFullYear() })}
           </p>
         </Reveal>
