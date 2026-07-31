@@ -188,11 +188,12 @@ export default function WorkSection() {
           )}
 
           {/* Conteúdo */}
-          <div className="absolute inset-0 z-[3] flex flex-col justify-between p-10">
+          <div className="absolute inset-0 z-[3]">
 
             {/* Topo — categoria + ano, visível só quando ativo */}
             <div
               className={[
+                "absolute top-10 left-10 right-10",
                 "transition-[opacity,transform] duration-500",
                 active === i
                   ? "opacity-100 translate-y-0"
@@ -204,28 +205,31 @@ export default function WorkSection() {
               </p>
             </div>
 
-            {/* Rodapé — título + conteúdo expandido */}
-            <div className="flex flex-col">
+            {/* Título — base fixa exatamente no centro vertical do painel, para alinhar entre projetos */}
+            <div className="absolute left-10 right-10 top-1/2 -translate-y-full flex items-end">
               <h3
                 className={[
                   "font-display uppercase leading-[0.87] tracking-[-0.01em] text-[#f0ede8]",
                   "transition-[font-size] duration-500",
                   active === i
-                    ? "text-[clamp(38px,4vw,68px)] mb-6"
-                    : "text-[clamp(22px,2vw,36px)] mb-0",
+                    ? "text-[clamp(38px,4vw,68px)]"
+                    : "text-[clamp(22px,2vw,36px)]",
                 ].join(" ")}
               >
                 {project.title}
               </h3>
+            </div>
 
+            {/* Ícones + conteúdo expandido — crescem a partir do centro vertical */}
+            <div className="absolute left-10 right-10 top-1/2 flex flex-col">
               {/* Stack + status — visível só quando colapsado (some ao ativar) */}
               <div
                 className={[
                   "flex items-center gap-3 overflow-hidden",
                   "transition-[opacity,max-height,margin] duration-500",
                   active === i
-                    ? "opacity-0 max-h-0 mb-0 pointer-events-none"
-                    : "opacity-100 max-h-8 mb-5",
+                    ? "opacity-0 max-h-0 mt-0 pointer-events-none"
+                    : "opacity-100 max-h-8 mt-4",
                 ].join(" ")}
               >
                 <div className="flex items-center gap-2.5">
@@ -250,52 +254,61 @@ export default function WorkSection() {
                 </div>
               </div>
 
-              {/* Só visível quando ativo (clique) */}
+              {/* Só visível quando ativo (clique) — grid-rows colapsa a altura no layout quando inativo */}
               <div
                 className={[
-                  "flex flex-col gap-5 overflow-hidden",
-                  "transition-[opacity,transform] duration-500",
-                  active === i
-                    ? "opacity-100 translate-y-0 pointer-events-auto"
-                    : "opacity-0 translate-y-4 pointer-events-none",
+                  "grid transition-[grid-template-rows,margin] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                  active === i ? "grid-rows-[1fr] mt-6" : "grid-rows-[0fr] mt-0",
                 ].join(" ")}
               >
-                <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.38] max-w-[380px]">
-                  {t(`projects.${project.id}.description`)}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex flex-wrap gap-x-10 gap-y-3 mt-1">
-                  {project.href && (
-                    <a
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
-                    >
-                      <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
-                      {t("viewLive")}
-                    </a>
-                  )}
-                  <a
-                    href={project.repoHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                <div className="overflow-hidden">
+                  <div
+                    className={[
+                      "flex flex-col gap-5",
+                      "transition-[opacity,transform] duration-500",
+                      active === i
+                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                        : "opacity-0 translate-y-4 pointer-events-none",
+                    ].join(" ")}
                   >
-                    <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
-                    {t("viewCode")}
-                  </a>
+                    <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.38] max-w-[380px]">
+                      {t(`projects.${project.id}.description`)}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="font-light text-[10px] tracking-[0.22em] uppercase text-[#f0ede8]/75 bg-white/[0.03] border border-white/[0.25] px-3 py-1.5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex flex-wrap gap-x-10 gap-y-3 mt-1">
+                      {project.href && (
+                        <a
+                          href={project.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                        >
+                          <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
+                          {t("viewLive")}
+                        </a>
+                      )}
+                      <a
+                        href={project.repoHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-[18px] font-light text-[10px] tracking-[0.5em] uppercase text-[#f0ede8]/30 no-underline transition-colors duration-400 hover:text-[#f0ede8]/65"
+                      >
+                        <span className="block w-8 h-px bg-current [transition:width_0.5s_cubic-bezier(0.16,1,0.3,1)] group-hover:w-[52px]" />
+                        {t("viewCode")}
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
