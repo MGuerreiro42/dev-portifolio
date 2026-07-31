@@ -4,6 +4,38 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Globe, Radio, Rss } from "lucide-react";
+import {
+  SiNestjs,
+  SiNextdotjs,
+  SiPostgresql,
+  SiRedis,
+  SiReact,
+  SiTypescript,
+  SiThreedotjs,
+  SiExpress,
+  SiExpo,
+  SiFramer,
+  SiTailwindcss,
+  SiGithub,
+} from "react-icons/si";
+
+const TECH_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  "NestJS": SiNestjs,
+  "Next.js": SiNextdotjs,
+  "PostgreSQL": SiPostgresql,
+  "Redis": SiRedis,
+  "WebSocket": Radio,
+  "React": SiReact,
+  "TypeScript": SiTypescript,
+  "Three.js": SiThreedotjs,
+  "Express": SiExpress,
+  "SSE": Rss,
+  "React Native": SiReact,
+  "Expo": SiExpo,
+  "Framer Motion": SiFramer,
+  "Tailwind": SiTailwindcss,
+};
 
 interface Project {
   id: string;
@@ -185,6 +217,38 @@ export default function WorkSection() {
               >
                 {project.title}
               </h3>
+
+              {/* Stack + status — visível só quando colapsado (some ao ativar) */}
+              <div
+                className={[
+                  "flex items-center gap-3 overflow-hidden",
+                  "transition-[opacity,max-height,margin] duration-500",
+                  active === i
+                    ? "opacity-0 max-h-0 mb-0 pointer-events-none"
+                    : "opacity-100 max-h-8 mb-5",
+                ].join(" ")}
+              >
+                <div className="flex items-center gap-2.5">
+                  {project.tags.map((tag) => {
+                    const Icon = TECH_ICONS[tag];
+                    return Icon ? (
+                      <Icon
+                        key={tag}
+                        className="w-[15px] h-[15px] text-[#f0ede8]/45"
+                      />
+                    ) : null;
+                  })}
+                </div>
+
+                <span className="w-px h-3.5 bg-white/15 shrink-0" />
+
+                <div className="flex items-center gap-2.5">
+                  <SiGithub className="w-[13px] h-[13px] text-[#f0ede8]/45" />
+                  {project.href && (
+                    <Globe className="w-[13px] h-[13px] text-emerald-400/70" />
+                  )}
+                </div>
+              </div>
 
               {/* Só visível quando ativo (clique) */}
               <div
