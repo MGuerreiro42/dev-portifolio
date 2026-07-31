@@ -21,7 +21,7 @@ export default function HeroSection() {
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.14) 1px, transparent 1px)",
+            "linear-gradient(rgba(255,255,255,0.22) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.22) 2px, transparent 2px)",
           backgroundSize: "56px 56px",
           maskImage:
             "radial-gradient(ellipse 65% 60% at 50% 46%, black 0%, transparent 78%)",
@@ -36,7 +36,7 @@ export default function HeroSection() {
 
       <div className="flex-1 flex items-center justify-center px-6 relative z-[5]">
         <motion.div
-          className="flex flex-col items-center text-center rounded-[32px] border border-white/10 bg-black/15 backdrop-blur-md px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
+          className="flex flex-col items-center text-center rounded-[32px] border border-white/15 backdrop-blur-sm px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
