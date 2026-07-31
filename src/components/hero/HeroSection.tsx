@@ -3,12 +3,21 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useHero } from "./useHero";
+import { usePanelFloat } from "./usePanelFloat";
 import DustField from "./DustField";
 import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 
 export default function HeroSection() {
   const t = useTranslations("Hero");
   const { containerRef, mouseXRef, mouseYRef, handleMouseMove, handleMouseLeave } = useHero();
+  const {
+    panelRef,
+    handleMouseMove: handlePanelMouseMove,
+    handleMouseLeave: handlePanelMouseLeave,
+    rotateX,
+    rotateY,
+    translateY: panelFloatY,
+  } = usePanelFloat();
 
   return (
     <div
@@ -17,6 +26,14 @@ export default function HeroSection() {
       onMouseLeave={handleMouseLeave}
       className="relative w-full h-screen bg-black flex flex-col overflow-hidden sticky top-0 z-[1]"
     >
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 50% at 50% 46%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 45%, transparent 75%)",
+        }}
+      />
+
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -34,11 +51,22 @@ export default function HeroSection() {
 
       <LocaleSwitcher />
 
-      <div className="flex-1 flex items-center justify-center px-6 relative z-[5]">
+      <div
+        className="flex-1 flex items-center justify-center px-6 relative z-[5]"
+        style={{ perspective: "1200px" }}
+      >
         <motion.div
-          className="flex flex-col items-center text-center rounded-[32px] border border-white/15 backdrop-blur-sm px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
+          ref={panelRef}
+          onMouseMove={handlePanelMouseMove}
+          onMouseLeave={handlePanelMouseLeave}
+          className="flex flex-col items-center text-center rounded-[32px] border border-white/8 backdrop-blur-sm shadow-[0_30px_80px_-30px_rgba(0,0,0,0.65)] px-[clamp(40px,8vw,120px)] py-[clamp(44px,6vw,84px)]"
+          style={{
+            transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${panelFloatY}px)`,
+            transformStyle: "preserve-3d",
+            willChange: "transform",
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.h1
