@@ -62,16 +62,15 @@ export default function AboutSection() {
         {/* Quote */}
         <Reveal delay={0.2} className="mb-10">
           <p className="font-display text-[clamp(22px,2.8vw,38px)] leading-[1.18] tracking-[-0.01em] uppercase text-[#f0ede8]">
-            I build interfaces as if they are{" "}
-            <span className="text-[#f0ede8]/[0.22]">architecture.</span>{" "}
-            Not just screens, but structures that balance motion, clarity, and human experience.
+            I turn complex products into interfaces that are{" "}
+            <span className="text-[#f0ede8]/[0.22]">fast, clear, and easy to maintain.</span>
           </p>
         </Reveal>
 
         {/* Parágrafo */}
         <Reveal delay={0.32} className="mb-16">
           <p className="font-light text-[12px] leading-[2] text-[#f0ede8]/[0.28] max-w-[520px]">
-            My approach is rooted in obsessive attention to detail — every transition, every spacing decision, every interaction must serve a purpose. I care about the craft as much as the outcome.
+            8 years of front-end experience — from defining technical direction to shipping the details that make a product feel right.
           </p>
         </Reveal>
 
