@@ -12,7 +12,7 @@ export default function TechPill({ label }: TechPillProps) {
   const color = TECH_COLORS[label];
 
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-md px-2.5 py-1 font-light text-[9px] tracking-[0.2em] uppercase text-[#f0ede8]/75">
+    <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-md px-2.5 py-1 font-light text-[9px] tracking-[0.2em] uppercase text-body">
       {Icon && (
         <Icon
           className="w-[11px] h-[11px] shrink-0"

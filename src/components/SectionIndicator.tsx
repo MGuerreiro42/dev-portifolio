@@ -21,8 +21,8 @@ export default function SectionIndicator({ current, onDotClick }: SectionIndicat
             className={[
               "block rounded-full transition-all duration-500",
               current === i
-                ? "w-2 h-2 bg-[#f0ede8]/80"
-                : "w-1.5 h-1.5 bg-[#f0ede8]/20 group-hover:bg-[#f0ede8]/40",
+                ? "w-2 h-2 bg-highlight/85"
+                : "w-1.5 h-1.5 bg-dim group-hover:bg-muted-warm/70",
             ].join(" ")}
           />
         </button>

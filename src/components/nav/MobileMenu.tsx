@@ -34,13 +34,13 @@ export default function MobileMenu() {
       >
         <span
           className={[
-            "block w-4 h-px bg-[#f0ede8]/80 transition-transform duration-300",
+            "block w-4 h-px bg-highlight/85 transition-transform duration-300",
             open ? "rotate-45 translate-y-[3px]" : "",
           ].join(" ")}
         />
         <span
           className={[
-            "block w-4 h-px bg-[#f0ede8]/80 transition-transform duration-300",
+            "block w-4 h-px bg-highlight/85 transition-transform duration-300",
             open ? "-rotate-45 -translate-y-[3px]" : "",
           ].join(" ")}
         />
@@ -63,8 +63,8 @@ export default function MobileMenu() {
                     className={[
                       "font-display text-[28px] uppercase tracking-[0.03em] transition-colors duration-300",
                       currentIndex === i
-                        ? "text-[#f0ede8]/90"
-                        : "text-[#f0ede8]/40",
+                        ? "text-highlight/90"
+                        : "text-muted-warm/80",
                     ].join(" ")}
                   >
                     {t(key)}
@@ -83,8 +83,8 @@ export default function MobileMenu() {
                   className={[
                     "font-light text-[11px] tracking-[0.18em] uppercase no-underline px-2.5 py-1 rounded-full transition-colors duration-[350ms]",
                     locale === l.code
-                      ? "text-[#f0ede8]/90 bg-white/10"
-                      : "text-[#f0ede8]/35",
+                      ? "text-highlight/90 bg-white/10"
+                      : "text-muted-warm/70",
                   ].join(" ")}
                 >
                   {l.label}

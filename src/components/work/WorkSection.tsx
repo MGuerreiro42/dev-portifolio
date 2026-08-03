@@ -122,7 +122,7 @@ export default function WorkSection() {
       className="relative w-full min-h-screen md:h-screen overflow-hidden md:sticky md:top-0 z-[3]"
     >
       {/* Linha divisória do topo */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.06] z-10" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.08] z-10" />
 
       {/* Desktop — painéis lado a lado, expandem com hover/clique */}
       <div className="hidden md:flex w-full h-full">
@@ -188,7 +188,7 @@ export default function WorkSection() {
 
           {/* Separador vertical entre painéis */}
           {i > 0 && (
-            <div className="absolute left-0 top-0 bottom-0 w-px bg-white/[0.07] z-[2]" />
+            <div className="absolute left-0 top-0 bottom-0 w-px bg-white/[0.08] z-[2]" />
           )}
 
           {/* Conteúdo */}
@@ -211,8 +211,8 @@ export default function WorkSection() {
                   : "opacity-0 pointer-events-none",
               ].join(" ")}
               style={{
-                top: active === i ? "calc(50% - 150px)" : "calc(50% - 70px)",
-                bottom: active === i ? "0px" : "calc(50% - 55px)",
+                top: active === i ? "calc(50% - 18vh)" : "calc(50% - 8.5vh)",
+                bottom: active === i ? "0px" : "calc(50% - 7vh)",
               }}
             />
 
@@ -226,7 +226,7 @@ export default function WorkSection() {
                   : "opacity-0 -translate-y-2",
               ].join(" ")}
             >
-              <p className="font-light text-[10px] tracking-[0.55em] uppercase text-[#f0ede8]/[0.35]">
+              <p className="font-light text-[10px] tracking-[0.55em] uppercase text-muted-warm/70">
                 {t(`projects.${project.id}.category`)} · {project.year}
               </p>
             </div>
@@ -235,7 +235,7 @@ export default function WorkSection() {
             <div className="absolute left-10 right-10 top-1/2 -translate-y-full flex items-end">
               <h3
                 className={[
-                  "font-display uppercase leading-[0.87] tracking-[-0.01em] text-[#f0ede8]",
+                  "font-display uppercase leading-[0.87] tracking-[-0.01em] text-highlight",
                   "transition-[font-size] duration-500",
                   active === i
                     ? "text-[clamp(38px,4vw,68px)]"
@@ -265,7 +265,7 @@ export default function WorkSection() {
                     return Icon ? (
                       <Icon
                         key={tag}
-                        className="w-[15px] h-[15px] text-[#f0ede8]/45"
+                        className="w-[15px] h-[15px] text-muted-warm/90"
                         style={color ? { color, opacity: 0.85 } : undefined}
                       />
                     ) : null;
@@ -275,7 +275,7 @@ export default function WorkSection() {
                 <span className="w-px h-3.5 bg-white/15 shrink-0" />
 
                 <div className="flex items-center gap-2.5">
-                  <SiGithub className="w-[13px] h-[13px] text-[#f0ede8]/45" />
+                  <SiGithub className="w-[13px] h-[13px] text-muted-warm/90" />
                   {project.href && <RecDot />}
                 </div>
               </div>
@@ -297,7 +297,7 @@ export default function WorkSection() {
                         : "opacity-0 translate-y-4 pointer-events-none",
                     ].join(" ")}
                   >
-                    <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.55] max-w-[380px]">
+                    <p className="font-light text-[13px] leading-[1.9] text-body/90 max-w-[380px]">
                       {t(`projects.${project.id}.description`)}
                     </p>
 
@@ -313,7 +313,7 @@ export default function WorkSection() {
                           href={project.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                         >
                           {t("viewLive")}
                           <ExternalLink className="w-3 h-3" />
@@ -323,7 +323,7 @@ export default function WorkSection() {
                         href={project.repoHref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                       >
                         {t("viewCode")}
                         <ExternalLink className="w-3 h-3" />
@@ -359,10 +359,10 @@ export default function WorkSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <p className="font-light text-[9px] tracking-[0.4em] uppercase text-[#f0ede8]/50 mb-1.5">
+                  <p className="font-light text-[9px] tracking-[0.4em] uppercase text-muted-warm mb-1.5">
                     {t(`projects.${project.id}.category`)} · {project.year}
                   </p>
-                  <h3 className="font-display text-[26px] leading-none uppercase text-[#f0ede8]">
+                  <h3 className="font-display text-[26px] leading-none uppercase text-highlight">
                     {project.title}
                   </h3>
                 </div>
@@ -376,7 +376,7 @@ export default function WorkSection() {
                     return Icon ? (
                       <Icon
                         key={tag}
-                        className="w-[15px] h-[15px] text-[#f0ede8]/45"
+                        className="w-[15px] h-[15px] text-muted-warm/90"
                         style={color ? { color, opacity: 0.85 } : undefined}
                       />
                     ) : null;
@@ -386,13 +386,13 @@ export default function WorkSection() {
                 <span className="w-px h-3.5 bg-white/15 shrink-0" />
 
                 <div className="flex items-center gap-2.5">
-                  <SiGithub className="w-[13px] h-[13px] text-[#f0ede8]/45" />
+                  <SiGithub className="w-[13px] h-[13px] text-muted-warm/90" />
                   {project.href && <RecDot />}
                 </div>
 
                 <ChevronDown
                   className={[
-                    "w-4 h-4 text-[#f0ede8]/30 ml-auto transition-transform duration-300",
+                    "w-4 h-4 text-muted-warm/60 ml-auto transition-transform duration-300",
                     active === i ? "rotate-180" : "",
                   ].join(" ")}
                 />
@@ -407,7 +407,7 @@ export default function WorkSection() {
             >
               <div className="overflow-hidden">
                 <div className="flex flex-col gap-4 px-4 pb-5">
-                  <p className="font-light text-[13px] leading-[1.9] text-[#f0ede8]/[0.5]">
+                  <p className="font-light text-[13px] leading-[1.9] text-muted-warm">
                     {t(`projects.${project.id}.description`)}
                   </p>
 
@@ -423,7 +423,7 @@ export default function WorkSection() {
                         href={project.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                       >
                         {t("viewLive")}
                         <ExternalLink className="w-3 h-3" />
@@ -433,7 +433,7 @@ export default function WorkSection() {
                       href={project.repoHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-[#f0ede8]/75 no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-[#f0ede8]"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                     >
                       {t("viewCode")}
                       <ExternalLink className="w-3 h-3" />

@@ -88,7 +88,7 @@ export default function ScrollContainer({
   }, [scrollToIndex]);
 
   return (
-    <SectionContext.Provider value={{ scrollToIndex, currentIndex }}>
+    <SectionContext.Provider value={{ scrollToIndex, currentIndex, containerRef }}>
       {overlay}
       <div
         ref={containerRef}

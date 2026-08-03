@@ -25,7 +25,7 @@ export default function Navbar() {
         {NAV_KEYS.map((key, i) => (
           <Fragment key={key}>
             {i > 0 && (
-              <li className="w-px h-[10px] bg-[#f0ede8]/[0.14] shrink-0" />
+              <li className="w-px h-[10px] bg-white/15 shrink-0" />
             )}
             <li>
               <button
@@ -33,8 +33,8 @@ export default function Navbar() {
                 className={[
                   baseLinkClass,
                   currentIndex === i
-                    ? "text-[#f0ede8]/80"
-                    : "text-[#f0ede8]/[0.38] hover:text-[#f0ede8]/80",
+                    ? "text-highlight/85"
+                    : "text-muted-warm/75 hover:text-highlight/85",
                 ].join(" ")}
               >
                 {t(key)}
