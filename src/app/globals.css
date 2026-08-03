@@ -34,11 +34,21 @@
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
+
+  /* ── Paleta do site — usada em vez de opacidades ad-hoc de uma única
+     cor, para que cada papel tipográfico tenha sua própria identidade. */
+  --color-surface: #070707;      /* fundo principal */
+  --color-surface-deep: #050505; /* fundo mais profundo (seções aninhadas) */
+  --color-highlight: #f3efe6;    /* texto de destaque/branco quente */
+  --color-muted-warm: #8a8880;   /* texto secundário — labels, datas */
+  --color-body: #b8b5ac;         /* texto terciário — parágrafos de corpo */
+  --color-dim: #4d4d4d;          /* texto apagado — contraste tipográfico */
+  --color-dim-2: #232323;        /* texto apagado profundo */
 }
 
 :root {
   --background: oklch(0 0 0);
-  --foreground: #f0ede8;
+  --foreground: #f3efe6;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
@@ -67,6 +77,6 @@
     @apply h-full;
   }
   body {
-    @apply bg-black text-[#f0ede8] font-sans overflow-x-hidden;
+    @apply bg-surface text-highlight font-sans overflow-x-hidden;
   }
 }
