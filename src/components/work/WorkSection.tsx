@@ -4,10 +4,12 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { ChevronDown, ExternalLink } from "lucide-react";
+import { ChevronDown, ExternalLink, ArrowRight } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { TECH_ICONS, TECH_COLORS } from "@/lib/techIcons";
+import { PROJECTS } from "@/lib/projects";
 import TechPill from "@/components/ui/TechPill";
+import { Link } from "@/i18n/navigation";
 
 /** Indicador "ao vivo" — bolinha vermelha com oscilação de brilho, como um sinal de REC. */
 function RecDot() {
@@ -28,63 +30,6 @@ function RecDot() {
     </span>
   );
 }
-
-interface Project {
-  id: string;
-  title: string;
-  year: string;
-  tags: string[];
-  image: string;
-  /** Live demo — omitted when the project has no public deploy (e.g. a mobile-only app). */
-  href?: string;
-  /** GitHub repository — always present. */
-  repoHref: string;
-}
-
-const PROJECTS: Project[] = [
-  {
-    id: "miniTms",
-    title: "Mini TMS",
-    year: "2026",
-    tags: ["NestJS", "Next.js", "PostgreSQL", "Redis", "WebSocket"],
-    image: "/projects/mini-tms.png",
-    href: "https://mini-tms-logitrack.vercel.app",
-    repoHref: "https://github.com/MGuerreiro42/mini-tms-logitrack",
-  },
-  {
-    id: "vigilDashboard",
-    title: "Vigil Dashboard",
-    year: "2026",
-    tags: ["React", "TypeScript", "Three.js", "WebSocket"],
-    image: "/projects/vigil-dashboard.png",
-    repoHref: "https://github.com/MGuerreiro42/vigil-dashboard",
-  },
-  {
-    id: "realtimeCommunication",
-    title: "Real-Time Communication",
-    year: "2026",
-    tags: ["Next.js", "Express", "WebSocket", "SSE"],
-    image: "/projects/realtime-communication.png",
-    href: "https://realtime-comunication-talk.vercel.app",
-    repoHref: "https://github.com/MGuerreiro42/realtime-comunication-talk",
-  },
-  {
-    id: "dineOutApp",
-    title: "Dine Out App",
-    year: "2026",
-    tags: ["React Native", "Expo", "TypeScript"],
-    image: "/projects/dine-out-app.png",
-    repoHref: "https://github.com/MGuerreiro42/dine-out-app",
-  },
-  {
-    id: "portfolio",
-    title: "Portfolio",
-    year: "2026",
-    tags: ["Next.js", "Three.js", "Framer Motion", "Tailwind"],
-    image: "/portfolio.png",
-    repoHref: "https://github.com/MGuerreiro42/dev-portifolio",
-  },
-];
 
 interface ParallaxOffset {
   x: number;
@@ -201,7 +146,11 @@ export default function WorkSection() {
                 então precisa de contraste ali); ao selecionar, a mesma faixa
                 expande até a base do painel para cobrir a descrição. O
                 box-shadow projeta para cima, como se a faixa fosse uma
-                superfície sobrevoando a imagem nítida logo acima dela. */}
+                superfície sobrevoando a imagem nítida logo acima dela. Um
+                dot-grid sutil (proposital diferente da linha usada no
+                Hero/Contact, só aqui) preenche o espaço negativo à direita
+                do texto — que tem largura fixa (max-w-380px) enquanto o
+                painel ativo pode ficar bem mais largo. */}
             <div
               className={[
                 "absolute left-0 right-0 backdrop-blur-md bg-black/20 shadow-[0_-30px_40px_-12px_rgba(0,0,0,0.6)]",
@@ -213,6 +162,9 @@ export default function WorkSection() {
               style={{
                 top: active === i ? "calc(50% - 18vh)" : "calc(50% - 8.5vh)",
                 bottom: active === i ? "0px" : "calc(50% - 7vh)",
+                backgroundImage:
+                  "radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px)",
+                backgroundSize: "22px 22px",
               }}
             />
 
@@ -308,6 +260,13 @@ export default function WorkSection() {
                     </div>
 
                     <div className="flex flex-wrap gap-3 mt-1">
+                      <Link
+                        href={`/work/${project.id}`}
+                        className="inline-flex items-center gap-2 rounded-full bg-highlight px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-surface no-underline transition-colors duration-300 hover:bg-highlight/85"
+                      >
+                        {t("caseStudy")}
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
                       {project.href && (
                         <a
                           href={project.href}
@@ -418,6 +377,13 @@ export default function WorkSection() {
                   </div>
 
                   <div className="flex flex-wrap gap-3">
+                    <Link
+                      href={`/work/${project.id}`}
+                      className="inline-flex items-center gap-2 rounded-full bg-highlight px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-surface no-underline transition-colors duration-300 hover:bg-highlight/85"
+                    >
+                      {t("caseStudy")}
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
                     {project.href && (
                       <a
                         href={project.href}

@@ -43,26 +43,109 @@
   "Work": {
     "viewLive": "View Live",
     "viewCode": "View Code",
+    "caseStudy": "Case Study",
+    "backToWork": "Back to Work",
+    "detailLabels": {
+      "overview": "Overview",
+      "architecture": "Architecture & Key Decisions",
+      "stack": "Tech Stack",
+      "challenge": "The Challenge",
+      "status": "Status"
+    },
     "projects": {
       "miniTms": {
         "category": "Full-Stack Application",
-        "description": "Multi-tenant transportation management system with real-time delivery tracking — NestJS, Next.js, PostgreSQL and Redis pub/sub, built to demonstrate real domain modeling and a horizontally-scalable real-time architecture."
+        "description": "Multi-tenant transportation management system with real-time delivery tracking — NestJS, Next.js, PostgreSQL and Redis pub/sub, built to demonstrate real domain modeling and a horizontally-scalable real-time architecture.",
+        "detail": {
+          "overview": "A multi-tenant transportation management system covering seller onboarding, carrier management, and real-time delivery tracking — built as a technical artifact, not a commercial product, to demonstrate real domain modeling and a horizontally-scalable real-time architecture.",
+          "architecture": [
+            "Multi-layer RBAC across four roles — admin, seller, carrier, and operator — each with its own onboarding, approval, and permission boundaries.",
+            "Shipment assignment runs through a real coverage-and-modality matching engine, not a naive first-come queue.",
+            "Real-time tracking over Socket.io with a Redis adapter, so the WebSocket layer scales across multiple API instances instead of being pinned to one process."
+          ],
+          "stack": [
+            "NestJS + Prisma (PostgreSQL) for a structured, testable backend with a real migration history.",
+            "Next.js App Router, TanStack Query, and Zustand on the frontend — server cache and UI state kept deliberately separate.",
+            "Redis doing three jobs at once: pub/sub for live tracking, caching, and BullMQ for background work."
+          ],
+          "challenge": "Making delivery tracking real-time without tying the WebSocket gateway to a single server. The Redis adapter for Socket.io solves this — any API instance can broadcast a tracking update and every connected client receives it, regardless of which instance they're attached to.",
+          "status": "Core product loop complete end-to-end and tested — 226 backend and 147 frontend tests, an 11-table data model, full seller/carrier self-signup with admin approval, shipment creation with real matching, and dashboards for all three roles. Operator invites and the notifications module (email/SLA alerts via BullMQ) are next on the roadmap."
+        }
       },
       "vigilDashboard": {
         "category": "Data Visualization",
-        "description": "A live global monitoring dashboard aggregating crypto markets, ISS tracking, seismic activity, weather and news into one real-time interface — React, a Three.js globe, WebSocket and REST polling side by side."
+        "description": "A live global monitoring dashboard aggregating crypto markets, ISS tracking, seismic activity, weather and news into one real-time interface — React, a Three.js globe, WebSocket and REST polling side by side.",
+        "detail": {
+          "overview": "A live global monitoring dashboard aggregating eight independent data sources — crypto markets, ISS tracking, seismic activity, natural events, weather, and news — into one dense, responsive interface, built to demonstrate integrating heterogeneous real-time systems without the UI falling apart under the load.",
+          "architecture": [
+            "Every widget shares one WidgetShell — header, LIVE indicator, loading/error/retry state — so visual consistency doesn't depend on repeating logic per widget.",
+            "Summary-page-plus-dedicated-pages pattern: the dashboard shows every widget in miniature, and each domain gets its own deeper page for detail and interactivity.",
+            "Heavy visualizations (the 3D globe, Leaflet maps) are isolated into their own lazy-loaded chunks — the initial dashboard load never waits on a ~470KB 3D vendor bundle."
+          ],
+          "stack": [
+            "React 19 with Vite 8 (Rolldown) for fast builds and route-based code splitting via lazy() + Suspense.",
+            "TanStack Query for server cache and deduplication across eight independent APIs; Zustand for the genuinely global state — selected cryptos, the Binance WebSocket buffer, geolocation, alerts.",
+            "react-globe.gl, Recharts, and Leaflet, each scoped to the one domain that needs it, so no page pays for a visualization library it doesn't use."
+          ],
+          "challenge": "Keeping the dashboard fluid while eight sources with different transports — WebSocket, REST polling, RSS/XML, geolocation — update independently. The Binance WebSocket only connects on the /crypto page, not the dashboard, and every list component that receives frequent updates is memoized — together they keep the summary view light even with everything else running underneath.",
+          "status": "Feature-complete and deployed. All eight data domains have both a dashboard widget and a dedicated page."
+        }
       },
       "realtimeCommunication": {
         "category": "Technical Demo",
-        "description": "An interactive, side-by-side comparison of Polling, Long Polling, Server-Sent Events and WebSocket — live event streams for each technique, plus a bilingual technical deep-dive presentation."
+        "description": "An interactive, side-by-side comparison of Polling, Long Polling, Server-Sent Events and WebSocket — live event streams for each technique, plus a bilingual technical deep-dive presentation.",
+        "detail": {
+          "overview": "An interactive, side-by-side comparison of the four real ways to get live data on the web — Polling, Long Polling, Server-Sent Events, and WebSocket — built from a technical talk delivered in Portuguese and rewritten here as a bilingual deep-dive with a working demo attached.",
+          "architecture": [
+            "A single Express + ws backend runs all four techniques in parallel against the same simulated price feed, so the comparison is a live measurement, not a slide.",
+            "Each technique has its own connection hook on the frontend and its own request counter — the point is to make the cost of each approach visible in real time, not just describe it.",
+            "Below the md breakpoint the four panels become full-screen, swipeable slides instead of a cramped four-column grid."
+          ],
+          "stack": [
+            "Plain Express + ws on the API — no framework overhead where the whole point is showing the raw mechanics of each transport.",
+            "Next.js App Router on the frontend, one hook per technique's connection logic, kept intentionally uncoupled from each other."
+          ],
+          "challenge": "Writing a production-grade SSE hook, not a toy one — exponential backoff, jitter to avoid a thundering herd on reconnect, stable callbacks via useLatestRef, and real cleanup on unmount. It's covered end-to-end, code and reasoning, in the deck's SSE module.",
+          "status": "Live demo and full bilingual slide deck (10 modules), both complete."
+        }
       },
       "dineOutApp": {
         "category": "Mobile App",
-        "description": "A restaurant and bar discovery app — browse by cuisine, occasion and vibe, dig into a menu and reviews. Expo/React Native, built with a spec-driven workflow; currently a navigable prototype for business partners."
+        "description": "A restaurant and bar discovery app — browse by cuisine, occasion and vibe, dig into a menu and reviews. Expo/React Native, built with a spec-driven workflow; currently a navigable prototype for business partners.",
+        "detail": {
+          "overview": "A restaurant and bar discovery app — browse by cuisine, occasion, and vibe, dig into a menu and reviews. Currently a navigable prototype for business partners: no backend yet, every screen reads from local mocks through a mocked network layer, so the seam to a real API is already in place rather than bolted on later.",
+          "architecture": [
+            "A bulletproof-react-inspired structure adapted for React Native/Expo — each feature is an isolated vertical module (api/components/hooks/stores/types) that never imports another feature directly.",
+            "Every screen goes through TanStack Query hooks backed by MSW-mocked handlers, never a mock file directly — swapping in a real API later means changing the api/ layer, not the components.",
+            "Built spec-driven: every feature has a written spec (user stories, functional requirements, an architecture mapping) before any code, kept in sync with the implementation as it evolves."
+          ],
+          "stack": [
+            "Expo (React Native + web from one codebase) with Expo Router for file-based navigation.",
+            "TanStack Query for server state, Zustand reserved for state genuinely needed by more than one feature.",
+            "MSW as the mocked network layer — tests and the running app hit the exact same handlers."
+          ],
+          "challenge": "Designing the mock-to-real-API seam correctly from day one, so a solo project without a backend yet doesn't end up needing a rewrite once one exists. Every component reads through a query hook, never a mock file — the day a real API shows up, only that hook's implementation changes.",
+          "status": "Navigable prototype, no backend. EAS Build is configured for internal APK distribution but hasn't been triggered yet."
+        }
       },
       "portfolio": {
         "category": "Personal Project",
-        "description": "This very portfolio — built with Next.js, Three.js and Framer Motion."
+        "description": "This very portfolio — built with Next.js, Three.js and Framer Motion.",
+        "detail": {
+          "overview": "This site. Four full-screen sections stacked with position: sticky and driven by a custom scroll-snap controller, with per-section entrance choreography, a Three.js particle field, and a scroll-linked exit parallax on the Hero section.",
+          "architecture": [
+            "A single ScrollContainer owns scroll state and exposes it through React context, so any component — nav, section indicator, a section's own exit animation — can react to the current section without prop drilling.",
+            "next-intl with a locale segment ([locale]) for full EN/PT-BR content, not just UI strings.",
+            "A semantic color-token system in Tailwind v4's @theme block — named roles (highlight, body, muted-warm, dim) instead of one base color with an ad-hoc opacity ladder."
+          ],
+          "stack": [
+            "Next.js 15 App Router, React 19, TypeScript.",
+            "Framer Motion for choreography, Three.js for the Hero's particle field.",
+            "Tailwind CSS v4 — CSS-based @theme configuration, no tailwind.config.js."
+          ],
+          "challenge": "Building a scroll-linked parallax for a position: sticky section. useScroll's target/offset mode measures the target's bounding rect — but a stuck sticky element's rect stops changing the moment it sticks, so the naive approach silently produces zero movement. The fix: read scrollTop/clientHeight directly from the scroll container instead of relying on element geometry.",
+          "status": "Actively evolving — most recently, dedicated case-study pages for each project, this one included."
+        }
       }
     }
   },
