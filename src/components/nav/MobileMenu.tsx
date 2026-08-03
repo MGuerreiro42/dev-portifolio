@@ -5,8 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { useSectionContext } from "@/context/SectionContext";
 import { Link } from "@/i18n/navigation";
-
-const NAV_KEYS = ["home", "about", "work", "contact"] as const;
+import { SECTION_KEYS } from "@/lib/sections";
 
 const LOCALES = [
   { code: "en", label: "EN" },
@@ -56,7 +55,7 @@ export default function MobileMenu() {
             transition={{ duration: 0.3 }}
           >
             <ul className="flex flex-col items-center gap-8 list-none">
-              {NAV_KEYS.map((key, i) => (
+              {SECTION_KEYS.map((key, i) => (
                 <li key={key}>
                   <button
                     onClick={() => handleNavClick(i)}
