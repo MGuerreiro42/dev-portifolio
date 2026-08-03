@@ -35,6 +35,11 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.4);
 
+  /* ── Breakpoint extra — monitores grandes/ultrawide. Abaixo dele, tudo
+     continua full-bleed como hoje; só a partir daqui o conteúdo ganha um
+     container com largura máxima, pra não esticar indefinidamente. */
+  --breakpoint-3xl: 1920px;
+
   /* ── Paleta do site — usada em vez de opacidades ad-hoc de uma única
      cor, para que cada papel tipográfico tenha sua própria identidade. */
   --color-surface: #070707;      /* fundo principal */

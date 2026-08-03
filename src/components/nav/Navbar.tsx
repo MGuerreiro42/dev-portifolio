@@ -4,8 +4,7 @@ import { Fragment } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useSectionContext } from "@/context/SectionContext";
-
-const NAV_KEYS = ["home", "about", "work", "contact"] as const;
+import { SECTION_KEYS } from "@/lib/sections";
 
 const baseLinkClass =
   "font-light text-[11px] leading-none tracking-[0.32em] uppercase no-underline px-5 py-1 transition-colors duration-[350ms] cursor-pointer";
@@ -22,7 +21,7 @@ export default function Navbar() {
       transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
     >
       <ul className="flex items-center list-none">
-        {NAV_KEYS.map((key, i) => (
+        {SECTION_KEYS.map((key, i) => (
           <Fragment key={key}>
             {i > 0 && (
               <li className="w-px h-[10px] bg-white/15 shrink-0" />

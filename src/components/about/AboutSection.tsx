@@ -1,9 +1,17 @@
 "use client";
 
+import { useRef } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Reveal from "@/components/ui/Reveal";
 import TechPill from "@/components/ui/TechPill";
+import { useSectionContext } from "@/context/SectionContext";
+import { useIsSectionActive } from "@/hooks/useIsSectionActive";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
+
+/* Carregado só no cliente, sob demanda — mesma lógica do DustField do Hero. */
+const GlassBlobs = dynamic(() => import("./GlassBlobs"), { ssr: false });
 
 const EXPERIENCE_IDS = ["luizalabs", "castGroup"] as const;
 
@@ -13,16 +21,35 @@ export default function AboutSection() {
   const t = useTranslations("About");
   const competencies = t.raw("competencies") as string[];
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const { containerRef: scrollContainerRef, currentIndex } = useSectionContext();
+  const isVisible = useIsSectionActive(1, currentIndex, sectionRef, scrollContainerRef);
+  const isDesktop = useIsDesktop();
+
   return (
     <section
+      ref={sectionRef}
       id="about"
-      className="relative w-full min-h-screen md:h-screen bg-black px-6 md:px-24 py-24 md:py-0 grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 md:gap-24 items-start md:items-center md:sticky md:top-0 z-[2]"
+      className="relative w-full min-h-screen md:h-screen bg-black md:sticky md:top-0 z-[2] overflow-hidden"
     >
-      {/* Linha divisória do topo */}
-      <div className="absolute top-0 left-6 right-6 md:left-24 md:right-24 h-px bg-white/[0.08]" />
+      {/* Blobs de "vidro" em 3D (Three.js) preenchendo o espaço negativo
+          entre as duas colunas — só monta enquanto a seção está visível,
+          já que as 4 seções ficam no DOM o tempo todo (sticky-stacked).
+          Só no desktop: no mobile as colunas empilham em uma só, e as
+          posições dos dois blobs foram calibradas pro layout largo de duas
+          colunas — sem isso ficavam fora de quadro, rodando à toa. */}
+      {isVisible && isDesktop && <GlassBlobs />}
 
-      {/* ── Coluna esquerda — deslocada para cima, mais perto do centro */}
-      <div className="flex flex-col md:[transform:translateY(clamp(-40px,-4vh,-16px))]">
+      {/* Container de conteúdo — abaixo de 3xl (monitores grandes/ultrawide)
+          continua full-bleed como sempre; a partir daí ganha uma largura
+          máxima centralizada, pra não esticar indefinidamente em telas bem
+          largas. Os blobs de fundo acima continuam full-bleed sempre. */}
+      <div className="relative z-[1] w-full h-full mx-auto 3xl:max-w-[1800px] grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 md:gap-24 items-start md:items-center px-6 md:px-24 py-24 md:py-0">
+        {/* Linha divisória do topo */}
+        <div className="absolute top-0 left-6 right-6 md:left-24 md:right-24 h-px bg-white/[0.08]" />
+
+        {/* ── Coluna esquerda — deslocada para cima, mais perto do centro */}
+      <div className="relative z-[1] flex flex-col md:[transform:translateY(clamp(-40px,-4vh,-16px))]">
         <Reveal delay={0.05} className="mb-10">
           <p className="font-light text-[10px] tracking-[0.55em] uppercase text-dim/80">
             {t("label")}
@@ -44,26 +71,31 @@ export default function AboutSection() {
           </p>
         </Reveal>
 
-        {/* Experiências */}
-        <div className="flex flex-col mt-auto">
-          {EXPERIENCE_IDS.map((id, i) => (
-            <div key={id}>
-              <Reveal delay={0.25 + i * 0.12}>
-                <div className="h-px bg-white/[0.08] mb-5" />
-                <p className="font-light text-[10px] tracking-[0.4em] uppercase text-dim/90 mb-2">
-                  {t(`experience.${id}.period`)}
-                </p>
-                <p className="font-light text-[12px] tracking-[0.18em] uppercase text-body/90 mb-6">
-                  {t(`experience.${id}.role`)}
-                </p>
-              </Reveal>
-            </div>
-          ))}
+        {/* Experiências — no mobile, um único blob de vidro fica só atrás
+            deste bloco (não a seção inteira), já que as duas colunas
+            empilham e não sobra espaço negativo pros dois blobs do desktop */}
+        <div className="relative flex flex-col mt-auto">
+          {isVisible && !isDesktop && <GlassBlobs single />}
+          <div className="relative z-[1] flex flex-col">
+            {EXPERIENCE_IDS.map((id, i) => (
+              <div key={id}>
+                <Reveal delay={0.25 + i * 0.12}>
+                  <div className="h-px bg-white/[0.08] mb-5" />
+                  <p className="font-light text-[10px] tracking-[0.4em] uppercase text-dim/90 mb-2">
+                    {t(`experience.${id}.period`)}
+                  </p>
+                  <p className="font-light text-[12px] tracking-[0.18em] uppercase text-body/90 mb-6">
+                    {t(`experience.${id}.role`)}
+                  </p>
+                </Reveal>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* ── Coluna direita — mais deslocada para baixo que a esquerda */}
-      <div className="flex flex-col justify-between md:[transform:translateY(clamp(60px,15vh,150px))]">
+      <div className="relative z-[1] flex flex-col justify-between md:[transform:translateY(clamp(60px,15vh,150px))]">
         {/* Quote */}
         <Reveal delay={0.2} className="mb-10">
           <p className="font-display text-[clamp(22px,2.8vw,38px)] leading-[1.18] tracking-[-0.01em] uppercase text-highlight">
@@ -115,6 +147,7 @@ export default function AboutSection() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );
