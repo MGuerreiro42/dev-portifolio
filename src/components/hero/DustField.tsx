@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 interface DustFieldProps {
@@ -17,6 +17,10 @@ export default function DustField({
   opacity = 0.28,
 }: DustFieldProps) {
   const mountRef = useRef<HTMLDivElement>(null);
+  // O chunk do three.js (carregado sob demanda) leva um instante pra baixar
+  // e parsear na primeira vez — sem isso a cena aparece de repente assim
+  // que fica pronta, em vez de surgir suavemente.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const el = mountRef.current;
@@ -37,11 +41,13 @@ export default function DustField({
 
     const COUNT = count;
     const positions = new Float32Array(COUNT * 3);
+    const sizes = new Float32Array(COUNT);
     const angles = new Float32Array(COUNT);
     const radii = new Float32Array(COUNT);
     const speeds = new Float32Array(COUNT);
     const yOffsets = new Float32Array(COUNT);
 
+    const BASE_SIZE = 0.028;
     for (let i = 0; i < COUNT; i++) {
       const r = 1.0 + Math.random() * 3.8;
       const angle = Math.random() * Math.PI * 2;
@@ -56,10 +62,17 @@ export default function DustField({
       positions[i * 3] = Math.cos(angle) * r;
       positions[i * 3 + 1] = y;
       positions[i * 3 + 2] = Math.sin(angle) * r * 0.35;
+
+      // Math.random() ao quadrado enviesa pra baixo — a maioria fica
+      // pequena (poeira fina), só umas poucas saem grandes (brilho de
+      // destaque), em vez de uma distribuição uniforme que ficaria
+      // homogênea demais.
+      sizes[i] = BASE_SIZE * (0.5 + Math.random() * Math.random() * 2.6);
     }
 
     const geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
 
     // Textura de glow: gradiente radial branco → transparente
     const canvas = document.createElement("canvas");
@@ -74,13 +87,34 @@ export default function DustField({
     ctx.fillRect(0, 0, 32, 32);
     const glowTexture = new THREE.CanvasTexture(canvas);
 
-    const mat = new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: 0.032,
-      map: glowTexture,
+    // PointsMaterial só aceita um `size` único pra todos os pontos — para
+    // variar o tamanho por partícula precisa de um shader próprio lendo um
+    // atributo `size` por vértice, mantendo ainda assim uma única draw
+    // call (crucial pro custo por frame continuar barato em 8000 partículas).
+    const mat = new THREE.ShaderMaterial({
+      uniforms: {
+        map: { value: glowTexture },
+        color: { value: new THREE.Color(0xffffff) },
+        opacity: { value: opacity },
+      },
+      vertexShader: `
+        attribute float size;
+        void main() {
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_PointSize = size * (400.0 / -mvPosition.z);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D map;
+        uniform vec3 color;
+        uniform float opacity;
+        void main() {
+          vec4 tex = texture2D(map, gl_PointCoord);
+          gl_FragColor = vec4(color, opacity) * tex;
+        }
+      `,
       transparent: true,
-      opacity,
-      sizeAttenuation: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
@@ -110,6 +144,9 @@ export default function DustField({
       renderer.render(scene, camera);
     };
     tick();
+    // Um frame depois, já com algo de fato renderizado na tela — dispara a
+    // transição de opacidade em vez de aparecer tudo de uma vez.
+    requestAnimationFrame(() => setReady(true));
 
     const onResize = () => {
       const nw = el.offsetWidth;
@@ -132,7 +169,14 @@ export default function DustField({
   return (
     <div
       ref={mountRef}
-      style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }}
+      style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 1,
+        pointerEvents: "none",
+        opacity: ready ? 1 : 0,
+        transition: "opacity 1200ms ease",
+      }}
     />
   );
 }

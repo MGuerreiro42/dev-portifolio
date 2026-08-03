@@ -1,15 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useHero } from "./useHero";
 import { usePanelFloat } from "./usePanelFloat";
 import { useIsFirefox } from "./useIsFirefox";
-import DustField from "./DustField";
 import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 import { useSectionContext } from "@/context/SectionContext";
+import { useIsSectionActive } from "@/hooks/useIsSectionActive";
+
+/* Carregado só no cliente, sob demanda — three.js é pesado e não deveria
+   entrar no bundle inicial de quem só quer ver o resto do site. */
+const DustField = dynamic(() => import("./DustField"), { ssr: false });
 
 /* Proporção original da foto: 1536 × 2730 ≈ 0.5629 */
 const PHOTO_RATIO = "1536 / 2730";
@@ -35,8 +40,13 @@ export default function HeroSection() {
   // congelado assim que "gruda" no topo, quebrando qualquer cálculo de
   // progresso baseado em geometria (mesmo problema do offsetTop com sticky
   // já visto no ScrollContainer).
-  const { containerRef: scrollContainerRef, scrollToIndex } = useSectionContext();
+  const { containerRef: scrollContainerRef, scrollToIndex, currentIndex } = useSectionContext();
   const [exitProgress, setExitProgress] = useState(0);
+
+  // Todas as 4 seções ficam montadas o tempo todo (sticky-stacked), então
+  // sem isso a cena de partículas rodaria para sempre depois do primeiro
+  // load, mesmo com o Hero enterrado embaixo de About/Work/Contact.
+  const isVisible = useIsSectionActive(0, currentIndex, containerRef, scrollContainerRef);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -89,7 +99,9 @@ export default function HeroSection() {
         }}
       />
 
-      <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={2000} opacity={0.22} />
+      {isVisible && (
+        <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={8000} opacity={0.22} />
+      )}
 
       {/* ── Foto — canto inferior esquerdo, sempre cortada exatamente ao
           meio (a metade esquerda sai da tela, cortada pelo overflow-hidden
@@ -100,7 +112,7 @@ export default function HeroSection() {
           parallax de saída (scroll) mora numa div comum própria, separada
           do crop estático e do fade de entrada. */}
       <div
-        className="absolute bottom-0 left-0 z-[2] pointer-events-none"
+        className="absolute bottom-0 left-0 z-0 pointer-events-none"
         style={{ perspective: "900px" }}
       >
         {/* Brilho de chão */}
@@ -139,7 +151,22 @@ export default function HeroSection() {
                 className="object-contain object-bottom mix-blend-lighten"
                 style={{
                   filter:
-                    "grayscale(1) contrast(1.05) brightness(0.88) drop-shadow(0 0 72px rgba(255,255,255,0.06)) drop-shadow(0 0 140px rgba(255,255,255,0.03))",
+                    "grayscale(1) contrast(1.05) brightness(0.62) drop-shadow(0 0 60px rgba(255,255,255,0.04))",
+                  opacity: 0.78,
+                }}
+              />
+              {/* Vinheta — a foto competia demais com o headline; escurece
+                  as bordas e reduz opacidade/brilho pra ela recuar como
+                  pano de fundo em vez de disputar atenção. Gradiente linear
+                  de cima pra baixo, não radial: uma elipse numa caixa tão
+                  estreita/alta cria uma faixa "achatada" no topo que ficava
+                  quase 100% preta e lisa, lendo como um retângulo colado
+                  em cima do fundo em vez de um fade suave. */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 45%)",
                 }}
               />
             </div>
