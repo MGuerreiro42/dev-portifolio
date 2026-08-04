@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Bebas_Neue, Barlow, Barlow_Condensed } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -39,10 +41,32 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata" });
+  const title = t("title");
+  const description = t("description");
 
   return {
-    title: t("title"),
-    description: t("description"),
+    metadataBase: new URL(SITE_URL),
+    title,
+    description,
+    alternates: {
+      languages: {
+        en: "/en",
+        "pt-BR": "/pt-br",
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${locale}`,
+      siteName: title,
+      locale: locale === "pt-br" ? "pt_BR" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 
@@ -65,7 +89,14 @@ export default async function RootLayout({
       className={cn(bebasNeue.variable, barlow.variable, barlowCondensed.variable)}
     >
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          {/* reducedMotion="user" faz todo motion.* do site respeitar
+              prefers-reduced-motion automaticamente — sem isso, nenhuma
+              das dezenas de animações (aqui incluindo as manuais em
+              Hero/DustField/GlassBlobs, tratadas à parte) reagia à
+              preferência do usuário. */}
+          <MotionConfig reducedMotion="user">{children}</MotionConfig>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
