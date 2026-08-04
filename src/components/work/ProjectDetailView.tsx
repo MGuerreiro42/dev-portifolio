@@ -23,7 +23,7 @@ function DetailSection({
 }) {
   return (
     <Reveal delay={0.05} className="mb-16 md:mb-20">
-      <p className="font-light text-[10px] tracking-[0.55em] uppercase text-dim/80 mb-5">
+      <p className="font-light text-[10px] tracking-[0.55em] uppercase text-muted-warm/90 mb-5">
         {label}
       </p>
       {children}

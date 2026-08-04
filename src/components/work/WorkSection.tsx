@@ -70,13 +70,18 @@ export default function WorkSection() {
       <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.08] z-10" />
 
       {/* Desktop — painéis lado a lado, expandem com hover/clique */}
-      <div className="hidden md:flex w-full h-full">
+      <div data-testid="work-desktop" className="hidden md:flex w-full h-full">
       {PROJECTS.map((project, i) => (
         <div
           key={project.title}
           ref={(el) => { panelRefs.current[i] = el; }}
+          role="button"
+          tabIndex={0}
+          aria-expanded={active === i}
+          aria-label={project.title}
           className={[
             "relative overflow-hidden cursor-pointer",
+            "focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-highlight/70",
             "transition-[flex] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
             active === i
               ? "flex-[2.5]"
@@ -89,6 +94,12 @@ export default function WorkSection() {
               : "flex-1",
           ].join(" ")}
           onClick={() => handleClick(i)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleClick(i);
+            }
+          }}
           onMouseEnter={() => setHovered(i)}
           onMouseMove={(e) => handleMouseMove(e, i)}
           onMouseLeave={() => handleMouseLeave(i)}
@@ -262,6 +273,7 @@ export default function WorkSection() {
                     <div className="flex flex-wrap gap-3 mt-1">
                       <Link
                         href={`/work/${project.id}`}
+                        tabIndex={active === i ? 0 : -1}
                         className="inline-flex items-center gap-2 rounded-full bg-highlight px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-surface no-underline transition-colors duration-300 hover:bg-highlight/85"
                       >
                         {t("caseStudy")}
@@ -272,6 +284,7 @@ export default function WorkSection() {
                           href={project.href}
                           target="_blank"
                           rel="noopener noreferrer"
+                          tabIndex={active === i ? 0 : -1}
                           className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                         >
                           {t("viewLive")}
@@ -282,6 +295,7 @@ export default function WorkSection() {
                         href={project.repoHref}
                         target="_blank"
                         rel="noopener noreferrer"
+                        tabIndex={active === i ? 0 : -1}
                         className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.25em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                       >
                         {t("viewCode")}
@@ -298,7 +312,7 @@ export default function WorkSection() {
       </div>
 
       {/* Mobile — lista vertical, toque expande a descrição/tags/links */}
-      <div className="flex md:hidden flex-col gap-5 px-6 py-24">
+      <div data-testid="work-mobile" className="flex md:hidden flex-col gap-5 px-6 py-24">
         {PROJECTS.map((project, i) => (
           <div
             key={project.title}
@@ -379,6 +393,7 @@ export default function WorkSection() {
                   <div className="flex flex-wrap gap-3">
                     <Link
                       href={`/work/${project.id}`}
+                      tabIndex={active === i ? 0 : -1}
                       className="inline-flex items-center gap-2 rounded-full bg-highlight px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-surface no-underline transition-colors duration-300 hover:bg-highlight/85"
                     >
                       {t("caseStudy")}
@@ -389,6 +404,7 @@ export default function WorkSection() {
                         href={project.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        tabIndex={active === i ? 0 : -1}
                         className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                       >
                         {t("viewLive")}
@@ -399,6 +415,7 @@ export default function WorkSection() {
                       href={project.repoHref}
                       target="_blank"
                       rel="noopener noreferrer"
+                      tabIndex={active === i ? 0 : -1}
                       className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-light text-[10px] tracking-[0.2em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
                     >
                       {t("viewCode")}
