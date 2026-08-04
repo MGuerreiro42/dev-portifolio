@@ -156,5 +156,10 @@
     "availability": "Aberto a oportunidades remotas, no mundo todo",
     "resume": "Baixar Currículo",
     "footer": "© {year} Miguel_Portfolio_V.01 — Americana, SP · Brasil"
+  },
+  "NotFound": {
+    "title": "Página não encontrada",
+    "description": "A página que você procura não existe, ou o link está quebrado.",
+    "backHome": "Voltar ao início"
   }
 }
