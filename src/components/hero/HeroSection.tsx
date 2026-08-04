@@ -11,6 +11,7 @@ import { useIsFirefox } from "./useIsFirefox";
 import LocaleSwitcher from "@/components/nav/LocaleSwitcher";
 import { useSectionContext } from "@/context/SectionContext";
 import { useIsSectionActive } from "@/hooks/useIsSectionActive";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /* Carregado só no cliente, sob demanda — three.js é pesado e não deveria
    entrar no bundle inicial de quem só quer ver o resto do site. */
@@ -31,6 +32,7 @@ export default function HeroSection() {
     translateY: panelFloatY,
   } = usePanelFloat();
   const isFirefox = useIsFirefox();
+  const reduceMotion = usePrefersReducedMotion();
 
   // Parallax de saída — só a seção Hero reage ao scroll: todos os elementos
   // sobem para fora da view, cada um numa velocidade diferente, conforme o
@@ -66,10 +68,15 @@ export default function HeroSection() {
     };
   }, [scrollContainerRef]);
 
-  const photoExitY = exitProgress * -110;
-  const panelExitY = exitProgress * -170;
-  const footerExitY = exitProgress * -60;
+  // A opacidade continua variando com o scroll mesmo com reduced-motion —
+  // é o deslocamento/rotação (parallax, tilt de mouse) que fica desligado.
+  const photoExitY = reduceMotion ? 0 : exitProgress * -110;
+  const panelExitY = reduceMotion ? 0 : exitProgress * -170;
+  const footerExitY = reduceMotion ? 0 : exitProgress * -60;
   const exitOpacity = 1 - exitProgress;
+  const panelTiltX = reduceMotion ? 0 : rotateX;
+  const panelTiltY = reduceMotion ? 0 : rotateY;
+  const panelFloat = reduceMotion ? 0 : panelFloatY;
 
   return (
     <div
@@ -99,7 +106,7 @@ export default function HeroSection() {
         }}
       />
 
-      {isVisible && (
+      {isVisible && !reduceMotion && (
         <DustField mouseXRef={mouseXRef} mouseYRef={mouseYRef} count={8000} opacity={0.22} />
       )}
 
@@ -144,7 +151,7 @@ export default function HeroSection() {
               }}
             >
               <Image
-                src="/photo.png"
+                src="/photo.webp"
                 alt="Miguel Guerreiro"
                 fill
                 priority
@@ -193,7 +200,7 @@ export default function HeroSection() {
             isFirefox ? "overflow-hidden bg-black" : "backdrop-blur-sm",
           ].join(" ")}
           style={{
-            transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(${panelFloatY}px)`,
+            transform: `rotateX(${panelTiltX}deg) rotateY(${panelTiltY}deg) translateY(${panelFloat}px)`,
             transformStyle: "preserve-3d",
             willChange: "transform",
           }}
@@ -224,7 +231,7 @@ export default function HeroSection() {
             transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             SOFTWARE<br />ENGINEER<br />
-            <span className="text-dim/90">FRONT-END<br />DEVELOPER</span>
+            <span className="text-muted-warm/90">FRONT-END<br />DEVELOPER</span>
           </motion.h1>
 
           <motion.p
@@ -268,7 +275,7 @@ export default function HeroSection() {
       >
         <div className="absolute bottom-9.5 left-6 right-6 md:left-24 md:right-24 h-px bg-white/[0.08]" />
         <motion.span
-          className="absolute bottom-11.5 left-6 right-6 md:left-auto md:right-24 text-right font-light text-[9px] tracking-[0.45em] uppercase text-dim-2"
+          className="absolute bottom-11.5 left-6 right-6 md:left-auto md:right-24 text-right font-light text-[9px] tracking-[0.45em] uppercase text-muted-warm/70"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2.0 }}

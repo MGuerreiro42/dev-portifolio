@@ -15,7 +15,7 @@ export default function Brand() {
         href="/"
         className="font-light leading-none text-[11px] tracking-[0.1em] lowercase no-underline text-highlight/85"
       >
-        guerreiro.dev
+        guerreiro-dev
       </Link>
     </motion.div>
   );

@@ -9,6 +9,7 @@ import TechPill from "@/components/ui/TechPill";
 import { useSectionContext } from "@/context/SectionContext";
 import { useIsSectionActive } from "@/hooks/useIsSectionActive";
 import { useIsDesktop } from "@/hooks/useIsDesktop";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 /* Carregado só no cliente, sob demanda — mesma lógica do DustField do Hero. */
 const GlassBlobs = dynamic(() => import("./GlassBlobs"), { ssr: false });
@@ -25,6 +26,7 @@ export default function AboutSection() {
   const { containerRef: scrollContainerRef, currentIndex } = useSectionContext();
   const isVisible = useIsSectionActive(1, currentIndex, sectionRef, scrollContainerRef);
   const isDesktop = useIsDesktop();
+  const reduceMotion = usePrefersReducedMotion();
 
   return (
     <section
@@ -38,7 +40,7 @@ export default function AboutSection() {
           Só no desktop: no mobile as colunas empilham em uma só, e as
           posições dos dois blobs foram calibradas pro layout largo de duas
           colunas — sem isso ficavam fora de quadro, rodando à toa. */}
-      {isVisible && isDesktop && <GlassBlobs />}
+      {isVisible && isDesktop && !reduceMotion && <GlassBlobs />}
 
       {/* Container de conteúdo — abaixo de 3xl (monitores grandes/ultrawide)
           continua full-bleed como sempre; a partir daí ganha uma largura
@@ -51,9 +53,9 @@ export default function AboutSection() {
         {/* ── Coluna esquerda — deslocada para cima, mais perto do centro */}
       <div className="relative z-[1] flex flex-col md:[transform:translateY(clamp(-40px,-4vh,-16px))]">
         <Reveal delay={0.05} className="mb-10">
-          <p className="font-light text-[10px] tracking-[0.55em] uppercase text-dim/80">
+          <h3 className="font-light text-[10px] tracking-[0.55em] uppercase text-muted-warm/90">
             {t("label")}
-          </p>
+          </h3>
         </Reveal>
 
         <Reveal delay={0.15} className="mb-8">
@@ -75,13 +77,13 @@ export default function AboutSection() {
             deste bloco (não a seção inteira), já que as duas colunas
             empilham e não sobra espaço negativo pros dois blobs do desktop */}
         <div className="relative flex flex-col mt-auto">
-          {isVisible && !isDesktop && <GlassBlobs single />}
+          {isVisible && !isDesktop && !reduceMotion && <GlassBlobs single />}
           <div className="relative z-[1] flex flex-col">
             {EXPERIENCE_IDS.map((id, i) => (
               <div key={id}>
                 <Reveal delay={0.25 + i * 0.12}>
                   <div className="h-px bg-white/[0.08] mb-5" />
-                  <p className="font-light text-[10px] tracking-[0.4em] uppercase text-dim/90 mb-2">
+                  <p className="font-light text-[10px] tracking-[0.4em] uppercase text-muted-warm/90 mb-2">
                     {t(`experience.${id}.period`)}
                   </p>
                   <p className="font-light text-[12px] tracking-[0.18em] uppercase text-body/90 mb-6">
@@ -98,15 +100,15 @@ export default function AboutSection() {
       <div className="relative z-[1] flex flex-col justify-between md:[transform:translateY(clamp(60px,15vh,150px))]">
         {/* Quote */}
         <Reveal delay={0.2} className="mb-10">
-          <p className="font-display text-[clamp(22px,2.8vw,38px)] leading-[1.18] tracking-[-0.01em] uppercase text-highlight">
+          <h2 className="font-display text-[clamp(22px,2.8vw,38px)] leading-[1.18] tracking-[-0.01em] uppercase text-highlight">
             {t("quotePrefix")}{" "}
-            <span className="text-dim/90">{t("quoteHighlight")}</span>
-          </p>
+            <span className="text-muted-warm/90">{t("quoteHighlight")}</span>
+          </h2>
         </Reveal>
 
         {/* Parágrafo */}
         <Reveal delay={0.32} className="mb-16">
-          <p className="font-light text-[13px] leading-[2] text-dim max-w-[520px]">
+          <p className="font-light text-[13px] leading-[2] text-body/80 max-w-[520px]">
             {t("paragraph")}
           </p>
         </Reveal>
@@ -116,9 +118,9 @@ export default function AboutSection() {
           {/* Competências */}
           <div>
             <Reveal delay={0.42} className="mb-5">
-              <p className="font-light text-[10px] tracking-[0.55em] uppercase text-dim/80">
+              <h3 className="font-light text-[10px] tracking-[0.55em] uppercase text-muted-warm/90">
                 {t("competenciesLabel")}
-              </p>
+              </h3>
             </Reveal>
             <ul className="flex flex-col gap-2">
               {competencies.map((item, i) => (
@@ -134,9 +136,9 @@ export default function AboutSection() {
           {/* Tech Stack */}
           <div>
             <Reveal delay={0.42} className="mb-5">
-              <p className="font-light text-[10px] tracking-[0.55em] uppercase text-dim/80">
+              <h3 className="font-light text-[10px] tracking-[0.55em] uppercase text-muted-warm/90">
                 {t("techStackLabel")}
-              </p>
+              </h3>
             </Reveal>
             <div className="flex flex-wrap gap-2">
               {TECH_STACK.map((tech, i) => (
