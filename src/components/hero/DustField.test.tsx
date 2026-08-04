@@ -25,6 +25,7 @@ describe("DustField", () => {
     );
     const mount = container.firstElementChild as HTMLElement;
     expect(mount.querySelector("canvas")).toBeInTheDocument();
+    expect(mount).toHaveAttribute("aria-hidden", "true");
   });
 
   it("sizes the particle buffers to the requested count", () => {

@@ -18,6 +18,7 @@ describe("GlassBlobs", () => {
     const { container } = render(<GlassBlobs />);
     const mount = container.firstElementChild as HTMLElement;
     expect(mount.querySelector("canvas")).toBeInTheDocument();
+    expect(mount).toHaveAttribute("aria-hidden", "true");
   });
 
   it("builds three blobs plus their glow lights by default", () => {

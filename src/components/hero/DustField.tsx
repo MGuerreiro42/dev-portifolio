@@ -169,6 +169,7 @@ export default function DustField({
   return (
     <div
       ref={mountRef}
+      aria-hidden="true"
       style={{
         position: "absolute",
         inset: 0,
