@@ -1,6 +1,7 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { Download } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
 import Reveal from "@/components/ui/Reveal";
@@ -10,8 +11,14 @@ const SOCIALS = [
   { label: "LinkedIn", href: "https://linkedin.com/in/miguelpguerreiro", Icon: FaLinkedin },
 ];
 
+const RESUME_HREF: Record<string, string> = {
+  en: "/resume/miguel-guerreiro-resume-en.pdf",
+  "pt-br": "/resume/miguel-guerreiro-curriculo-pt-br.pdf",
+};
+
 export default function ContactSection() {
   const t = useTranslations("Contact");
+  const locale = useLocale();
 
   return (
     <section
@@ -62,10 +69,27 @@ export default function ContactSection() {
           </a>
         </Reveal>
 
-        {/* Socials */}
+        {/* Disponibilidade */}
+        <Reveal delay={0.14}>
+          <p className="font-light text-[11px] tracking-[0.3em] uppercase text-muted-warm/90">
+            {t("availability")}
+          </p>
+        </Reveal>
+
+        {/* Socials + currículo */}
         <div className="flex items-center gap-4">
+          <Reveal delay={0.18}>
+            <a
+              href={RESUME_HREF[locale]}
+              download
+              className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.05] px-5 py-2.5 font-light text-[10px] tracking-[0.3em] uppercase text-body no-underline transition-colors duration-300 hover:bg-white/15 hover:border-white/30 hover:text-highlight"
+            >
+              <Download className="w-[15px] h-[15px]" />
+              {t("resume")}
+            </a>
+          </Reveal>
           {SOCIALS.map((social, i) => (
-            <Reveal key={social.label} delay={0.18 + i * 0.08}>
+            <Reveal key={social.label} delay={0.26 + i * 0.08}>
               <a
                 href={social.href}
                 target="_blank"
@@ -83,7 +107,7 @@ export default function ContactSection() {
       {/* ── Rodapé ── */}
       <div className="relative z-10 flex items-center justify-center px-6 md:px-24 py-5 border-t border-white/[0.06]">
         <Reveal delay={0.05} margin={0}>
-          <p className="font-light text-[9px] tracking-[0.4em] uppercase text-dim/80">
+          <p className="font-light text-[9px] tracking-[0.4em] uppercase text-muted-warm/80">
             {t("footer", { year: new Date().getFullYear() })}
           </p>
         </Reveal>
