@@ -1,6 +1,7 @@
 # Miguel Guerreiro — Portfolio
 
 [![CI](https://github.com/MGuerreiro42/dev-portifolio/actions/workflows/ci.yml/badge.svg)](https://github.com/MGuerreiro42/dev-portifolio/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/MGuerreiro42/dev-portifolio/main/.github/badges/coverage.json&style=flat-square)](https://github.com/MGuerreiro42/dev-portifolio/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js&style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white&style=flat-square)
@@ -135,6 +136,7 @@ Vitest + React Testing Library, ~150 tests across the whole `src/` tree — 98%+
 - **RAF-driven animation hooks** (`useHero`, `usePanelFloat`, the particle/blob render loops) are tested with a manually-stepped `requestAnimationFrame` double (`src/test/raf.ts`) rather than real timers, so tests assert on N frames of lerp convergence deterministically and instantly.
 - `vitest.setup.ts` stubs browser APIs jsdom doesn't implement (`matchMedia`, `IntersectionObserver`, canvas 2D context) and mocks `next/image`/`next/font/google`.
 - Server Components with no meaningful DOM to render (`generateMetadata`, `generateStaticParams`, the `[locale]` layout/page) are tested by calling the exported functions directly and inspecting the returned element tree, rather than a full DOM render.
+- The coverage badge above is self-hosted, not Codecov — CI regenerates `.github/badges/coverage.json` on every push to `main` and the README badge reads it via `img.shields.io/endpoint`.
 
 ## Customisation
 

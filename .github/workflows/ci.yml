@@ -13,6 +13,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Only needed for the coverage-badge commit-back step below, which is
+    # itself gated to pushes on main — PR runs stay read-only.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +40,25 @@ jobs:
 
       - name: Test
         run: pnpm run test:coverage
+
+      # Self-hosted coverage badge: no external service (no Codecov account,
+      # consistent with the CI/License/stack badges above, which are all
+      # either GitHub-native or static shields.io badges) — just a small
+      # JSON committed back to the repo that the README badge reads via
+      # https://img.shields.io/endpoint. Only runs on pushes to main, using
+      # the default GITHUB_TOKEN, which does not trigger further workflow
+      # runs (no push-loop risk).
+      - name: Update coverage badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          node .github/scripts/generate-coverage-badge.mjs
+          if ! git diff --quiet -- .github/badges/coverage.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .github/badges/coverage.json
+            git commit -m "chore: update coverage badge [skip ci]"
+            git push
+          fi
 
       - name: Build
         run: pnpm run build
