@@ -7,6 +7,7 @@ import { MotionConfig } from "framer-motion";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { SITE_URL } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 import "../globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -89,6 +90,7 @@ export default async function RootLayout({
       className={cn(bebasNeue.variable, barlow.variable, barlowCondensed.variable)}
     >
       <body>
+        <JsonLd />
         <NextIntlClientProvider>
           {/* reducedMotion="user" faz todo motion.* do site respeitar
               prefers-reduced-motion automaticamente — sem isso, nenhuma

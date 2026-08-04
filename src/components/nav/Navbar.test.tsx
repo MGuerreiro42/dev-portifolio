@@ -5,6 +5,11 @@ import { renderWithIntl } from "@/test/test-utils";
 import Navbar from "./Navbar";
 
 describe("Navbar", () => {
+  it("is labeled as the primary nav landmark", () => {
+    renderWithIntl(<Navbar />, { section: { currentIndex: 0 } });
+    expect(screen.getByRole("navigation", { name: "Primary" })).toBeInTheDocument();
+  });
+
   it("renders the four section links, in order", () => {
     renderWithIntl(<Navbar />, { section: { currentIndex: 0 } });
     expect(screen.getAllByRole("button").map((btn) => btn.textContent)).toEqual([

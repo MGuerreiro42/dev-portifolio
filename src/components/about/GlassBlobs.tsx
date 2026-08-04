@@ -190,6 +190,7 @@ export default function GlassBlobs({ single = false }: GlassBlobsProps) {
   return (
     <div
       ref={mountRef}
+      aria-hidden="true"
       className="absolute inset-0 z-0 pointer-events-none"
       style={{ opacity: ready ? 1 : 0, transition: "opacity 1200ms ease" }}
     />

@@ -14,7 +14,7 @@ describe("MobileMenu", () => {
     expect(screen.queryByRole("button", { name: "Work" })).not.toBeInTheDocument();
   });
 
-  it("opens to reveal the section links and locale switcher", async () => {
+  it("opens to reveal a labeled nav landmark with the section links and locale switcher", async () => {
     renderWithIntl(<MobileMenu />, { section: { currentIndex: 0 } });
     await userEvent.click(screen.getByRole("button", { name: "Open menu" }));
 
@@ -22,6 +22,7 @@ describe("MobileMenu", () => {
       "aria-expanded",
       "true"
     );
+    expect(screen.getByRole("navigation", { name: "Mobile" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Work" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "EN" })).toBeInTheDocument();
   });

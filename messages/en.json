@@ -7,7 +7,8 @@
     "home": "Home",
     "about": "About",
     "work": "Work",
-    "contact": "Contact"
+    "contact": "Contact",
+    "skipToContent": "Skip to content"
   },
   "Hero": {
     "name": "Miguel Guerreiro",
@@ -155,5 +156,10 @@
     "availability": "Open to remote opportunities, worldwide",
     "resume": "Download Resume",
     "footer": "© {year} Miguel_Portfolio_V.01 — Americana, SP · Brazil"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist, or the link is broken.",
+    "backHome": "Back to home"
   }
 }

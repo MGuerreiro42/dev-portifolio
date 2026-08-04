@@ -20,7 +20,7 @@ export default function ScrollContainer({
   overlay,
   duration = 1400,
 }: ScrollContainerProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
   const currentIndexRef = useRef(0);
   const isAnimating = useRef(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -146,14 +146,20 @@ export default function ScrollContainer({
   return (
     <SectionContext.Provider value={{ scrollToIndex, currentIndex, containerRef }}>
       {overlay}
-      <div
+      <main
+        id="main-content"
+        // Not in the tab order (only reachable via the skip link's
+        // fragment jump, which moves focus here programmatically) — a
+        // real focus stop here would otherwise be a no-op tab step with
+        // no visible affordance.
+        tabIndex={-1}
         ref={containerRef}
-        className="h-screen overflow-y-scroll"
+        className="h-screen overflow-y-scroll outline-none"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
       >
         {children}
         <SectionIndicator current={currentIndex} onDotClick={scrollToIndex} />
-      </div>
+      </main>
     </SectionContext.Provider>
   );
 }

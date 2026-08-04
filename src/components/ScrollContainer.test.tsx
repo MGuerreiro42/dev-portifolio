@@ -45,7 +45,7 @@ function setup({ isDesktop = true, clientHeight = 800 } = {}) {
       <Sections />
     </ScrollContainer>
   );
-  const scrollDiv = utils.container.querySelector(".overflow-y-scroll") as HTMLDivElement;
+  const scrollDiv = utils.container.querySelector(".overflow-y-scroll") as HTMLElement;
   return { ...utils, scrollDiv, getCtx: () => ctx };
 }
 
@@ -55,6 +55,14 @@ afterEach(() => {
 });
 
 describe("ScrollContainer", () => {
+  it("renders the scrollable content as a <main> landmark, reachable via the skip link", () => {
+    installFakeRaf();
+    const { scrollDiv } = setup();
+    expect(scrollDiv.tagName).toBe("MAIN");
+    expect(scrollDiv).toHaveAttribute("id", "main-content");
+    expect(scrollDiv).toHaveAttribute("tabIndex", "-1");
+  });
+
   it("animates scrollTop and lands on the requested section", () => {
     const fakeRaf = installFakeRaf();
     vi.spyOn(performance, "now").mockReturnValue(0);

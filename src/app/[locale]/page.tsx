@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import ScrollContainer from "@/components/ScrollContainer";
+import SkipLink from "@/components/nav/SkipLink";
 import Brand from "@/components/nav/Brand";
 import Navbar from "@/components/nav/Navbar";
 import MobileMenu from "@/components/nav/MobileMenu";
@@ -21,6 +22,7 @@ export default async function Home({
       duration={1400}
       overlay={
         <>
+          <SkipLink />
           <Brand />
           <Navbar />
           <MobileMenu />

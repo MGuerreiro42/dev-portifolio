@@ -17,13 +17,13 @@ export function makeSectionContextValue(
   overrides: Partial<{
     scrollToIndex: (index: number) => void;
     currentIndex: number;
-    containerRef: { current: HTMLDivElement | null };
+    containerRef: { current: HTMLElement | null };
   }> = {}
 ) {
   return {
     scrollToIndex: overrides.scrollToIndex ?? (() => {}),
     currentIndex: overrides.currentIndex ?? 0,
-    containerRef: overrides.containerRef ?? createRef<HTMLDivElement>(),
+    containerRef: overrides.containerRef ?? createRef<HTMLElement>(),
   };
 }
 
@@ -32,7 +32,7 @@ interface WrapperOptions {
   section?: Partial<{
     scrollToIndex: (index: number) => void;
     currentIndex: number;
-    containerRef: { current: HTMLDivElement | null };
+    containerRef: { current: HTMLElement | null };
   }>;
 }
 
