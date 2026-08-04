@@ -5,7 +5,7 @@ import { createContext, useContext, RefObject } from "react";
 interface SectionContextType {
   scrollToIndex: (index: number) => void;
   currentIndex: number;
-  containerRef: RefObject<HTMLDivElement | null>;
+  containerRef: RefObject<HTMLElement | null>;
 }
 
 export const SectionContext = createContext<SectionContextType>({

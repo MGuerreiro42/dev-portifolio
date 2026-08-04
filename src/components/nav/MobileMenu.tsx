@@ -47,7 +47,8 @@ export default function MobileMenu() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <motion.nav
+            aria-label="Mobile"
             className="fixed inset-0 z-[105] flex flex-col items-center justify-center gap-12 bg-black/95 backdrop-blur-md"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -90,7 +91,7 @@ export default function MobileMenu() {
                 </Link>
               ))}
             </div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </div>

@@ -15,6 +15,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
+      aria-label="Primary"
       className="fixed top-5 left-1/2 -translate-x-1/2 z-[100] hidden md:flex items-center rounded-full border border-white/10 bg-black/40 px-2 py-1.5 backdrop-blur-md"
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}

@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { Children, isValidElement } from "react";
 import ScrollContainer from "@/components/ScrollContainer";
+import SkipLink from "@/components/nav/SkipLink";
 import Brand from "@/components/nav/Brand";
 import Navbar from "@/components/nav/Navbar";
 import MobileMenu from "@/components/nav/MobileMenu";
@@ -30,6 +31,6 @@ describe("Home page", () => {
     const overlayTypes = Children.toArray(element.props.overlay.props.children)
       .filter(isValidElement)
       .map((child) => child.type);
-    expect(overlayTypes).toEqual([Brand, Navbar, MobileMenu]);
+    expect(overlayTypes).toEqual([SkipLink, Brand, Navbar, MobileMenu]);
   });
 });
