@@ -1,7 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
+import { Children, isValidElement } from "react";
 import { MotionConfig } from "framer-motion";
 import { NextIntlClientProvider } from "next-intl";
 import { SITE_URL } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
 
 const setRequestLocale = vi.fn();
 const getTranslations = vi.fn(async ({ locale }: { locale: string }) => {
@@ -63,10 +65,18 @@ describe("RootLayout", () => {
     const body = element.props.children;
     expect(body.type).toBe("body");
 
-    const intlProvider = body.props.children;
-    expect(intlProvider.type).toBe(NextIntlClientProvider);
+    const bodyChildren = Children.toArray(body.props.children).filter(isValidElement);
+    expect(bodyChildren.map((child) => child.type)).toEqual([
+      JsonLd,
+      NextIntlClientProvider,
+    ]);
 
-    const motionConfig = intlProvider.props.children;
+    const intlProvider = bodyChildren[1] as React.ReactElement<{ children: React.ReactElement }>;
+
+    const motionConfig = intlProvider.props.children as React.ReactElement<{
+      reducedMotion: string;
+      children: React.ReactElement<{ "data-testid": string }>;
+    }>;
     expect(motionConfig.type).toBe(MotionConfig);
     expect(motionConfig.props.reducedMotion).toBe("user");
     expect(motionConfig.props.children.props["data-testid"]).toBe("page-content");
