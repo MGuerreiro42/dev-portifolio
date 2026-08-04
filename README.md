@@ -119,10 +119,22 @@ Open [http://localhost:3000](http://localhost:3000) in your browser (redirects t
 | `pnpm build` | Create a production build |
 | `pnpm start` | Serve the production build |
 | `pnpm lint` | Run ESLint |
+| `pnpm test` | Run the test suite once |
+| `pnpm test:watch` | Run the test suite in watch mode |
+| `pnpm test:coverage` | Run the test suite with a coverage report |
 
-CI (`.github/workflows/ci.yml`) runs typecheck + lint + build on every push/PR to `main`.
+CI (`.github/workflows/ci.yml`) runs typecheck + lint + test + build on every push/PR to `main`.
 
 ---
+
+## Testing
+
+Vitest + React Testing Library, ~150 tests across the whole `src/` tree — 98%+ statement coverage, 100% line/function coverage. A few notes on how it's set up:
+
+- **Three.js scenes** (`DustField`, `GlassBlobs`) are tested against a lightweight fake of the `three` module (`src/test/mocks/three.ts`) instead of a real WebGL context, which jsdom can't provide — this keeps the suite fast (~12s for the full run) while still asserting on the actual setup/cleanup wiring (renderer disposal, resize handling, light/mesh construction).
+- **RAF-driven animation hooks** (`useHero`, `usePanelFloat`, the particle/blob render loops) are tested with a manually-stepped `requestAnimationFrame` double (`src/test/raf.ts`) rather than real timers, so tests assert on N frames of lerp convergence deterministically and instantly.
+- `vitest.setup.ts` stubs browser APIs jsdom doesn't implement (`matchMedia`, `IntersectionObserver`, canvas 2D context) and mocks `next/image`/`next/font/google`.
+- Server Components with no meaningful DOM to render (`generateMetadata`, `generateStaticParams`, the `[locale]` layout/page) are tested by calling the exported functions directly and inspecting the returned element tree, rather than a full DOM render.
 
 ## Customisation
 
